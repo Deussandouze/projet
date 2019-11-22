@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1574446917 source:c:\users\florian\desktop\td nf05\dicoptr\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1574446917 source:c:\users\florian\desktop\td nf05\projet\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

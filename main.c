@@ -7,39 +7,73 @@ void deflimite(int taille,int *req,int *max)
 {
     if (taille<=3)
     {
-        *req=2;
+        *req=1;
         *max=4;
     }
     else if (taille<=5)
     {
-        *req=3;
+        *req=2;
         *max=6;
     }
     else if (taille<=8)
     {
-        *req=5;
+        *req=3;
         *max=11;
     }
     else if(taille<=12)
     {
-        *req=8;
+        *req=4;
         *max=15;
     }
     else
     {
-        *req=12;
+        *req=5;
         *max=20;
     }
+}
+
+void trad(char *tab,int t)
+{
+    int i=0,x=0,y=0,changer=1;
+    char swap[t];
+    while (changer!=0 || x<=t)
+    {
+        changer=0;
+        if (tab[x]==-61 && tab[x+1])
+        {
+            tab[x]=-126;
+            i=1;
+            while(tab[x+i]!='\n')
+            {
+                tab[x+i]=tab[x+1+i];
+                i++;
+            }
+            changer=1;
+        }
+        else
+        {
+
+        }
+        x++;
+    }
+    tab[x+1]='\n';
+
+
 }
 
 int main()
 {
     FILE* fichier = NULL;
-    char chaine[50];
+    char chaine[100],car;
     char mot[30];
-    int i,check,x,distance,same=0,copie,taille,distancereq,distancemax;
+    char tab[50][100];
+    int i,y,x,z,distance,same=0,copie,taille,distancereq,distancemax;
+    int lettre_doublee,lettre_oublie,imot,ichaine;
+    int TAILLE_MAX=100;
+
     fichier = fopen("dico.dic","r");
-    printf("Sasir mot : ");
+
+    printf("Saisir mot : ");
     fflush(stdin);
     fgets(mot,30,stdin);
     taille=strlen(mot);
@@ -49,38 +83,93 @@ int main()
 
     if (fichier!=NULL)
     {
-        while(fgets(chaine,50,fichier) != NULL && same==0)
+        y=0;
+        while(fgets(chaine,TAILLE_MAX,fichier) != NULL && same==0)
         {
-            copie=0;
+            trad(chaine,TAILLE_MAX);
             i=0;
-            x=0;
             distance=0;
-            while( mot[i]==chaine[i] && i<=taille)
+            lettre_doublee=0;
+            lettre_oublie=0;
+            imot=0;
+            ichaine=0;
+            while( mot[imot]!='\n' && chaine[ichaine]!='/' && chaine[ichaine]!=' ' && chaine[ichaine]!='\n')
             {
-                i++;
-                if(i>distancereq && copie==0)
+                if (mot[imot]!=chaine[ichaine])
                 {
-                   while(chaine[x]!='/' && chaine[x]!=' ')
+                    distance+=1;
+                }
+                if(mot[imot+1]==chaine[ichaine] && mot[imot]!=chaine[ichaine])
+                {
+                    lettre_doublee++;
+                }
+                if(mot[imot]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine])
+                {
+                    lettre_oublie++;
+                }
+
+                i++;
+                imot=i+lettre_doublee;
+                ichaine=i+lettre_oublie;
+            }
+
+            if(mot[imot]!='\n')
+                {
+                    x=imot;
+                    while(mot[x]!='\n')
                     {
                         x++;
+                        distance++;
                     }
-                    copie=1;
-                    printf("%s",chaine);
-                    if ((distancemax)-x <0)
-                    {
-                        printf("\nFaux\n\n");
-                    }
-
                 }
-            }
-            if(mot[i-1]==chaine[i-1] && mot[i]=='\n' && (chaine[i]=='/' ||chaine[i+1]=='p'))
+
+                else if(chaine[ichaine]!='/' && chaine[ichaine]!=' ' && chaine[ichaine]!='\n' )
+                {
+                    x=i;
+                    while(chaine[x]!='/' && chaine[x]!=' ' && chaine[x]!='\n')
+                    {
+                        x++;
+                        distance++;
+                    }
+                }
+
+            if(distance==0)
             {
                 same=1;
                 printf("%s",chaine);
             }
+            else if(distance<distancereq)
+            {
+
+                z=0;
+                while(chaine[z]!='\n')
+                {
+                    tab[y][z]=chaine[z];
+                    z++;
+                }
+                tab[y][z]=chaine[z];
+                y++;
+            }
+
 
         }
-        printf("%d",same);
+        y=y-1;
+        if (same!=1)
+        {
+            for(i=0;i<=y;i++)
+            {
+                x=0;
+                printf("\n");
+                while(tab[i][x]!='\n')
+                {
+                    printf("%c",tab[i][x]);
+                    x++;
+                }
+            }
+        }
+
+
+        printf("\n\nMot trouv\202 : %d",same);
         fclose(fichier);
     }
     else
