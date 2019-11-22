@@ -35,7 +35,6 @@ void deflimite(int taille,int *req,int *max)
 void trad(char *tab,int t)
 {
     int i=0,x=0,y=0,changer=1;
-    char swap[t];
     while (changer!=0 || x<=t)
     {
         changer=0;
