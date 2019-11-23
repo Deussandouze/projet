@@ -27,30 +27,91 @@ void deflimite(int taille,int *req)
     }
 }
 
+void copie(char tab[],int pos)
+{
+    int i=1;
+    while(tab[pos+i]!='\n')
+            {
+                tab[pos+i]=tab[pos+1+i];
+                i++;
+            }
+}
+
 void trad(char *tab,int t)
 {
-    int i=0,x=0,y=0,changer=1;
+
+    int x=0,y=0,changer=1;
     while (changer!=0 || x<=t)
     {
         changer=0;
-        if (tab[x]==-61 && tab[x+1])
+        if (tab[x]==-61 && tab[x+1]==-87) // codage du è
         {
             tab[x]=-126;
-            i=1;
-            while(tab[x+i]!='\n')
-            {
-                tab[x+i]=tab[x+1+i];
-                i++;
-            }
+            copie(tab,x);
             changer=1;
         }
-        else
+        else if (tab[x]==-61 && tab[x+1]==-88) // codage du è
         {
-
+            tab[x]=-118;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-85) // codage du ë
+        {
+            tab[x]=-119;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-86) // codage du ê
+        {
+            tab[x]=-120;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-82) // codage de î
+        {
+            tab[x]=-116;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-81) // codage de ï
+        {
+            tab[x]=-117;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-76) // codage du ô
+        {
+            tab[x]=-109;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-92) // codage du ö
+        {
+            tab[x]=-108;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-94) // codage du â
+        {
+            tab[x]=-125;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-92) // codage du ä
+        {
+            tab[x]=-124;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-96) // codage du à
+        {
+            tab[x]=-123;
+            copie(tab,x);
+            changer=1;
         }
         x++;
     }
-    tab[x+1]='\n';
 
 
 }
@@ -61,7 +122,7 @@ void correctionmot()
     char chaine[100],car;
     char mot[30];
     char tab[100][100];
-    int i,y,x,z,distance,same=0,copie,taille,distancereq;
+    int i,y,x,z,distance,same=0,copie,taille,taillechaine,distancereq;
     int lettre_doublee,lettre_oublie,imot,ichaine;
     int TAILLE_MAX=100;
 
@@ -80,7 +141,8 @@ void correctionmot()
         y=0;
         while(fgets(chaine,TAILLE_MAX,fichier) != NULL && same==0)
         {
-            trad(chaine,TAILLE_MAX);
+            taillechaine=strlen(chaine);
+            trad(chaine,taillechaine);
             i=0;
             distance=0;
             lettre_doublee=0;
