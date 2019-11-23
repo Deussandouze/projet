@@ -3,32 +3,27 @@
 #include <string.h>
 
 
-void deflimite(int taille,int *req,int *max)
+void deflimite(int taille,int *req)
 {
     if (taille<=3)
     {
         *req=1;
-        *max=4;
     }
     else if (taille<=5)
     {
         *req=2;
-        *max=6;
     }
     else if (taille<=8)
     {
         *req=3;
-        *max=11;
     }
     else if(taille<=12)
     {
         *req=4;
-        *max=15;
     }
     else
     {
         *req=5;
-        *max=20;
     }
 }
 
@@ -66,19 +61,19 @@ void correctionmot()
     char chaine[100],car;
     char mot[30];
     char tab[100][100];
-    int i,y,x,z,distance,same=0,copie,taille,distancereq,distancemax;
+    int i,y,x,z,distance,same=0,copie,taille,distancereq;
     int lettre_doublee,lettre_oublie,imot,ichaine;
     int TAILLE_MAX=100;
 
     fichier = fopen("dico.dic","r");
-
-    printf("Saisir mot : ");
+    printf("Bienvenue dans le correcteur de mot.\n");
+    printf("Veuillez saisir un mot  corriger : ");
     fflush(stdin);
     fgets(mot,30,stdin);
     taille=strlen(mot);
     taille-=1;
 
-    deflimite(taille,&distancereq,&distancemax);
+    deflimite(taille,&distancereq);
 
     if (fichier!=NULL)
     {
@@ -179,7 +174,7 @@ void correctionmot()
 
 int main()
 {
-    int mode=0;
+    int mode;
     printf("Quel mode souahitez vous utiliser ?");
     printf("\n1- Mode correction de mot.\n2- Mode correction de texte.");
     printf("Veuillez entrer le mode d\202sir\202 : ");
@@ -187,6 +182,7 @@ int main()
     while(mode!=1 && mode!=2)
     {
         printf("Saisie du mode incorrecte.\n Veuillez r\202essayer : ");
+        fflush(stdin);
         scanf("%d",&mode);
     }
     switch(mode)
