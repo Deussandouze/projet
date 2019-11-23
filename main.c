@@ -37,7 +37,7 @@ void copie(char tab[],int pos)
             }
 }
 
-void trad(char *tab,int t)
+void trad(char *tab,int t) //Traduction des accents du fichier avec le même code récupéré en console
 {
 
     int x=0,y=0,changer=1;
@@ -127,8 +127,8 @@ void correctionmot()
     int TAILLE_MAX=100;
 
     fichier = fopen("dico.dic","r");
-    printf("Bienvenue dans le correcteur de mot.\n");
-    printf("Veuillez saisir un mot  corriger : ");
+    printf("\nBienvenue dans le correcteur de mot.\n");
+    printf("\nVeuillez saisir un mot  corriger : ");
     fflush(stdin);
     fgets(mot,30,stdin);
     taille=strlen(mot);
