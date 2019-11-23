@@ -60,12 +60,12 @@ void trad(char *tab,int t)
 
 }
 
-int main()
+void correctionmot()
 {
     FILE* fichier = NULL;
     char chaine[100],car;
     char mot[30];
-    char tab[50][100];
+    char tab[100][100];
     int i,y,x,z,distance,same=0,copie,taille,distancereq,distancemax;
     int lettre_doublee,lettre_oublie,imot,ichaine;
     int TAILLE_MAX=100;
@@ -175,5 +175,25 @@ int main()
     {
         printf("Impossible d'acces");
     }
+}
+
+int main()
+{
+    int mode=0;
+    printf("Quel mode souahitez vous utiliser ?");
+    printf("\n1- Mode correction de mot.\n2- Mode correction de texte.");
+    printf("Veuillez entrer le mode d\202sir\202 : ");
+    scanf("%d",&mode);
+    while(mode!=1 && mode!=2)
+    {
+        printf("Saisie du mode incorrecte.\n Veuillez r\202essayer : ");
+        scanf("%d",&mode);
+    }
+    switch(mode)
+    {
+        case 1:correctionmot();break;
+        case 2:printf("Pas encore cr\202\202");break;
+    }
+
     return 0;
 }
