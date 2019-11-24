@@ -194,7 +194,7 @@ void correctionmot()
                 same=1;
                 printf("%s",chaine);
             }
-            else if(distance<distancereq)
+            else if(distance<=distancereq)
             {
 
                 z=0;
