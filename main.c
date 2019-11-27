@@ -2,29 +2,27 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct{
+char tab[100];
+int diff;
+}motproche;
 
-void deflimite(int taille,int *req)
+
+void deflimite(int taille,int *req) //reglage de la distance limite par rapport à la taille d'un mot
 {
     if (taille<=3)
     {
         *req=1;
     }
-    else if (taille<=5)
+    else if (taille>3)
     {
         *req=2;
     }
-    else if (taille<=8)
+    else if (taille>8)
     {
         *req=3;
     }
-    else if(taille<=12)
-    {
-        *req=4;
-    }
-    else
-    {
-        *req=5;
-    }
+
 }
 
 void copie(char tab[],int pos)
@@ -40,7 +38,7 @@ void copie(char tab[],int pos)
 void trad(char *tab,int t) //Traduction des accents du fichier avec le même code récupéré en console
 {
 
-    int x=0,y=0,changer=1;
+    int x=0,changer=1;
     while (changer!=0 || x<=t)
     {
         changer=0;
@@ -119,10 +117,10 @@ void trad(char *tab,int t) //Traduction des accents du fichier avec le même code
 void correctionmot()
 {
     FILE* fichier = NULL;
-    char chaine[100],car;
+    char chaine[100];
     char mot[30];
-    char tab[100][100];
-    int i,y,x,z,distance,same=0,copie,taille,taillechaine,distancereq;
+    motproche tabfinal[300];
+    int i,y,x,z,distance,same=0,taille,taillechaine,distancereq;
     int lettre_doublee,lettre_oublie,imot,ichaine;
     int TAILLE_MAX=100;
 
@@ -149,17 +147,17 @@ void correctionmot()
             lettre_oublie=0;
             imot=0;
             ichaine=0;
-            while( mot[imot]!='\n' && chaine[ichaine]!='/' && chaine[ichaine]!=' ' && chaine[ichaine]!='\n')
+            while( mot[imot]!='\n' && chaine[ichaine]!='/' && chaine[ichaine]!=' ' && chaine[ichaine]!='\n' )
             {
                 if (mot[imot]!=chaine[ichaine])
                 {
                     distance+=1;
                 }
-                if(mot[imot+1]==chaine[ichaine] && mot[imot]!=chaine[ichaine])
+                if(mot[imot+1]==chaine[ichaine] && mot[imot+2]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine])
                 {
                     lettre_doublee++;
                 }
-                if(mot[imot]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine])
+                if(mot[imot]==chaine[ichaine+1] && mot[imot+1]==chaine[ichaine+2] && mot[imot]!=chaine[ichaine])
                 {
                     lettre_oublie++;
                 }
@@ -189,38 +187,39 @@ void correctionmot()
                     }
                 }
 
-            if(distance==0)
+            if(distance==0) // si le mot est trouvé, renvois le mot du dico
             {
                 same=1;
                 printf("%s",chaine);
             }
-            else if(distance<=distancereq)
+            else if(distance<=distancereq) //Copie dus mots proche du dico dans un tableau de struct
             {
-
+                tabfinal[y].diff=distance;
                 z=0;
                 while(chaine[z]!='\n')
                 {
-                    tab[y][z]=chaine[z];
+                    tabfinal[y].tab[z]=chaine[z];
                     z++;
                 }
-                tab[y][z]=chaine[z];
+                tabfinal[y].tab[z]=chaine[z];
                 y++;
             }
 
-
         }
         y=y-1;
+
         if (same!=1)
         {
             for(i=0;i<=y;i++)
             {
                 x=0;
                 printf("\n");
-                while(tab[i][x]!='\n')
+                while(tabfinal[i].tab[x]!='\n')
                 {
-                    printf("%c",tab[i][x]);
+                    printf("%c",tabfinal[i].tab[x]);
                     x++;
                 }
+                 printf("   %d",tabfinal[i].diff);
             }
         }
 

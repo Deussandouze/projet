@@ -1,3 +1,4 @@
+professeur/F.() po:nom po:titr
 81226
 & po:mg po:cjco
 1er/-- po:adj is:mas is:sg
@@ -63386,7 +63387,7 @@ proférer/c0p+() po:v1__t___zz
 professante/F.() po:nom po:adj
 professe/F.() po:nom po:adj
 professer/a0p+() po:v1_it___zz
-professeure/F.() po:nom po:titr
+professeur/F.() po:nom po:titr
 profession/S.() po:nom is:fem
 professionnalisante/F.() po:adj
 professionnalisation/S.() po:nom is:fem
