@@ -14,11 +14,11 @@ void deflimite(int taille,int *req) //reglage de la distance limite par rapport 
     {
         *req=1;
     }
-    else if (taille>3)
+    else if (taille>3 && taille<=6)
     {
         *req=2;
     }
-    else if (taille>8)
+    else if (taille>7)
     {
         *req=3;
     }
@@ -153,14 +153,41 @@ void correctionmot()
                 {
                     distance+=1;
                 }
-                if(mot[imot+1]==chaine[ichaine] && mot[imot+2]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine])
+                if (imot<taille-1 && ichaine<taille-1)
                 {
-                    lettre_doublee++;
+                    if(mot[imot+1]==chaine[ichaine] && mot[imot+2]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine])  // correction des lettre insérées en doubles, ex : perssonne
+                    {
+                        lettre_doublee++;
+                    }
+                    else if(mot[imot]==chaine[ichaine+1] && mot[imot+1]==chaine[ichaine+2] && mot[imot]!=chaine[ichaine]) // double lettre oubliees ex : persone
+                    {
+                        lettre_oublie++;
+                    }
+                    else if(mot[imot+1]==chaine[ichaine+2] && mot[imot+2]==chaine[ichaine+3] && mot[imot]!=chaine[ichaine]) // correction du f à la place de ph, éléfant / éléphant
+                    {
+                        lettre_oublie+=2;
+                        lettre_doublee++;
+                        distance++;
+                    }
                 }
-                if(mot[imot]==chaine[ichaine+1] && mot[imot+1]==chaine[ichaine+2] && mot[imot]!=chaine[ichaine])
+                else
                 {
-                    lettre_oublie++;
+                    if(mot[imot+1]==chaine[ichaine] && mot[imot]!=chaine[ichaine])
+                    {
+                        lettre_doublee++;
+                    }
+                    else if(mot[imot]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine])
+                    {
+                        lettre_oublie++;
+                    }
+                    else if(mot[imot+1]==chaine[ichaine+2]  && mot[imot]!=chaine[ichaine])
+                    {
+                        lettre_oublie+=2;
+                        lettre_doublee++;
+                        distance++;
+                    }
                 }
+
 
                 i++;
                 imot=i+lettre_doublee;
@@ -179,7 +206,7 @@ void correctionmot()
 
                 else if(chaine[ichaine]!='/' && chaine[ichaine]!=' ' && chaine[ichaine]!='\n' )
                 {
-                    x=i;
+                    x=ichaine;
                     while(chaine[x]!='/' && chaine[x]!=' ' && chaine[x]!='\n')
                     {
                         x++;
