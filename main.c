@@ -14,7 +14,7 @@ void deflimite(int taille,int *req) //reglage de la distance limite par rapport 
     {
         *req=1;
     }
-    else if (taille>3 && taille<=6)
+    else if (taille>3 && taille<=7)
     {
         *req=2;
     }
@@ -25,7 +25,7 @@ void deflimite(int taille,int *req) //reglage de la distance limite par rapport 
 
 }
 
-void copie(char tab[],int pos)
+void copie(char tab[],int pos) //permet la copie d'un tableau, utile pour la traduction d'un mot
 {
     int i=1;
     while(tab[pos+i]!='\n')
@@ -167,7 +167,6 @@ void correctionmot()
                     {
                         lettre_oublie+=2;
                         lettre_doublee++;
-                        distance++;
                     }
                 }
                 else
@@ -184,7 +183,6 @@ void correctionmot()
                     {
                         lettre_oublie+=2;
                         lettre_doublee++;
-                        distance++;
                     }
                 }
 
@@ -194,7 +192,7 @@ void correctionmot()
                 ichaine=i+lettre_oublie;
             }
 
-            if(mot[imot]!='\n')
+            if(mot[imot]!='\n') // test si on est bien arrivé à la fin du mot saisie
                 {
                     x=imot;
                     while(mot[x]!='\n')
@@ -204,7 +202,7 @@ void correctionmot()
                     }
                 }
 
-                else if(chaine[ichaine]!='/' && chaine[ichaine]!=' ' && chaine[ichaine]!='\n' )
+                else if(chaine[ichaine]!='/' && chaine[ichaine]!=' ' && chaine[ichaine]!='\n' ) // test si on est bien arrivé à la fin du mot du dictionnaire récupéré
                 {
                     x=ichaine;
                     while(chaine[x]!='/' && chaine[x]!=' ' && chaine[x]!='\n')
@@ -237,7 +235,7 @@ void correctionmot()
 
         if (same!=1)
         {
-            for(i=0;i<=y;i++)
+            for(i=0;i<=y;i++) // affichage de toutes les possibilitées à l'écran
             {
                 x=0;
                 printf("\n");
@@ -251,7 +249,7 @@ void correctionmot()
         }
 
 
-        printf("\n\nMot trouv\202 : %d",same);
+        printf("\n\nMot trouv\202 : %d",same); // affichage si le mot àbien été trouvé
         fclose(fichier);
     }
     else
@@ -275,8 +273,8 @@ int main()
     }
     switch(mode)
     {
-        case 1:correctionmot();break;
-        case 2:printf("Pas encore cr\202\202");break;
+        case 1:correctionmot();break;                   // correcteur de mot un à un
+        case 2:printf("Pas encore cr\202\202");break;   // correction d'un fichier txt
     }
 
     return 0;
