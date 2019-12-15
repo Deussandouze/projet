@@ -287,14 +287,14 @@ int affichage(int *taille,motproche *tabfinal)
         }
         return -1;
     }
-
+    return 0;
 }
 
 int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
 {
     FILE* fichier = NULL;
     char chaine[100];
-    int i,x,test,z,distance,same=0,taille,taillechaine,distancereq;
+    int i,x,z,distance,same=0,taille,taillechaine,distancereq;
     int lettre_doublee,lettre_oublie,imot,ichaine;
     int TAILLE_MAX=100;
     int indicesErrFrappe[3]={0,0,0};
@@ -442,6 +442,7 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
     {
         printf("Impossible d'acces");
     }
+    return 1;
 }
 
 void copiemotfichier(char *tab,motproche *tabfinal,int x)
@@ -472,7 +473,6 @@ void correctionfichier(motproche *tabfinal,int tailletab)
     nouvfichier=fopen("textecorrige.txt","w");
     char lettre,mottext[30],motbon[30];
     int x=0,res,compteur;
-    motproche motcorrige[300];
     int i;
     if (ptr!=NULL && nouvfichier!=NULL)
     {
