@@ -287,7 +287,6 @@ int affichage(int *taille,motproche *tabfinal)
         }
         return -1;
     }
-    return 0;
 }
 
 int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
