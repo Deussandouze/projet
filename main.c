@@ -11,34 +11,16 @@ int err_frappe;
 
 
 
-void tri_liste(motproche new_word, char* mot, motproche* liste_mots, unsigned* ind, int distancereq)
+motproche erreurFrappe(motproche new_word, char* mot, int* ind, int distancereq)
 {
-    int find, debut, fin, x, j;
+    int find, i, x, j;
     char x2;
-    int i=-1;
-    while(find==0)
-    {
-        i = i+1;
-        if(i==new_word.diff)
-        {
-            debut=i;
-            while(find==0)
-            {
-                i = i+1;
-                if(i==(new_word.diff+1))
-                {
-                    fin = i;
-                    find = 1;
-                }
-            }
-        }
-    }
 
     char lettres_proches[26][7] = //def des lettres proches
     {
-        {'&', 'é', 'z', 's', 'q'}, //a
-        {'v', 'g', 'h', 'n'}, //b
-        {'x', 'd', 'f', 'v'}, //c
+        {'&', 'é', 'z', 's', 'q', '\0', '\0'}, //a
+        {'v', 'g', 'h', 'n', '\0', '\0', '\0'}, //b
+        {'x', 'd', 'f', 'v', '\0', '\0', '\0'}, //c
         {'s', 'z', 'e', 'r', 'f', 'c', 'x'}, //d
         {'z', '"', '\'', 'r', 'f', 'd', 's'}, //e
         {'d', 'e', 'r', 't', 'g', 'v', 'c'}, //f
@@ -49,19 +31,19 @@ void tri_liste(motproche new_word, char* mot, motproche* liste_mots, unsigned* i
         {'j', 'u', 'i', 'o', 'l', ';', ','}, //k
         {'k', 'i', 'o', 'p', 'm', ':', ';'}, //l
         {'l', 'o', 'p', '^', 'ù', '!', ':'}, //m
-        {'b', 'h', 'j', ','}, //n
+        {'b', 'h', 'j', ',', '\0', '\0', '\0'}, //n
         {'i', 'ç', 'à', 'p', 'm', 'l', 'k'}, //o
         {'o', 'à', ')', '^', 'ù', 'm', 'l'}, //p
-        {'a', 'z', 's', 'x', 'w', '<'}, //q
+        {'a', 'z', 's', 'x', 'w', '<', '\0'}, //q
         {'e', 'd', 'f', 'g', 't', '(', '\''}, //r
         {'q', 'a', 'z', 'e', 'd', 'x', 'w'}, //s
         {'r', 'f', 'g', 'h', 'y', '-', '('}, //t
         {'y', 'h', 'j', 'k', 'i', '_', 'è'}, //u
-        {'c', 'f', 'g', 'b'}, //v
-        {'<', 'q', 's', 'x'}, //w
-        {'w', 's', 'd', 'c'}, //x
+        {'c', 'f', 'g', 'b', '\0', '\0', '\0'}, //v
+        {'<', 'q', 's', 'x', '\0', '\0', '\0'}, //w
+        {'w', 's', 'd', 'c', '\0', '\0', '\0'}, //x
         {'t', 'g', 'h', 'j', 'u', 'è', '-'}, //y
-        {'a', 'q', 's', 'd', 'e', '"', 'é'}, //z
+        {'a', 'q', 's', 'd', 'e', '"', 'é'} //z
     };
 
     find=0;
@@ -74,40 +56,46 @@ void tri_liste(motproche new_word, char* mot, motproche* liste_mots, unsigned* i
             x = (int)x2-65;
         else if(x2 >= 'a' && x2 <= 'z')
             x = (int)x2-97;
+        else x=-1;
 
         j = -1;
         while((j<7)&&(new_word.err_frappe==find))
         {
             j = j+1;
-            if(( new_word.tab[ind[i]] ) == ( lettres_proches[x2][j] ))
+            if( (x>0) && (( new_word.tab[ind[i]] ) == ( lettres_proches[x][j] )) )
             {
                 new_word.err_frappe = new_word.err_frappe+1;
                 find = new_word.err_frappe;
             }
         }
     }
+    return new_word;
+}
 
-    find=0;
-    x=0;
-    while(find==0)
+void tri_liste(motproche* liste_mots, int nbrMots)
+{
+    int i=0;
+    motproche tmp, tmp2;
+
+    while(i<nbrMots)
     {
-        x = fin-debut;
-        if((x%2)==1)
-            x = x+1;
-
-        if((new_word.err_frappe < liste_mots[x/2].err_frappe)&&(new_word.err_frappe > liste_mots[(x/2)-1].err_frappe))
+        if(liste_mots[i].diff > liste_mots[i+1].diff)
         {
-            x = x/2;
-            for(i=300; i>x; i--)
-            {
-                liste_mots[i] = liste_mots[i-1];
-            }
-            liste_mots[x] = new_word;
+            tmp = liste_mots[i];
+            tmp2 = liste_mots[i+1];
+            liste_mots[i] = tmp2;
+            liste_mots[i+1] = tmp;
+            i=-1;
         }
-        else if(new_word.err_frappe > liste_mots[x/2].err_frappe)
-            debut = x/2;
-        else if(new_word.err_frappe < liste_mots[x/2].err_frappe)
-            fin = x/2;
+        if( ((liste_mots[i].err_frappe>liste_mots[i+1].err_frappe) || (liste_mots[i].err_frappe==0)) && (liste_mots[i].diff == liste_mots[i+1].diff) &&(liste_mots[i+1].err_frappe>0) )
+        {
+            tmp = liste_mots[i];
+            tmp2 = liste_mots[i+1];
+            liste_mots[i] = tmp2;
+            liste_mots[i+1] = tmp;
+            i=-1;
+        }
+        i++;
     }
 }
 
@@ -275,7 +263,9 @@ int affichage(int *taille,motproche *tabfinal)
                     printf("%c",tabfinal[pos].tab[x]);
                     x++;
                 }
-            printf("    position[%d]\n",pos);
+            printf("    position[%d]",pos);
+            printf("    (distance = %d |",tabfinal[pos].diff);
+            printf(" err_frappe =%d)\n",tabfinal[pos].err_frappe);
             pos++;
         }
         printf("\nEtes vous satisfait d'une des propositons (OUI=1 , NON=0) : ");
@@ -307,7 +297,7 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
     int i,x,test,z,distance,same=0,taille,taillechaine,distancereq;
     int lettre_doublee,lettre_oublie,imot,ichaine;
     int TAILLE_MAX=100;
-    unsigned indices_err_frappe[3];
+    int indicesErrFrappe[3]={0,0,0};
 
     fichier = fopen("dico.dic","r");
     taille=taillemot(mot);
@@ -331,9 +321,11 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
             {
                 if (mot[imot]!=chaine[ichaine])
                 {
-
+                    if(distance<=distancereq)
+                    {
+                        indicesErrFrappe[distance] = imot;
+                    }
                     distance+=1;
-
                 }
                 if (imot<taille-1 && ichaine<taille-1)
                 {
@@ -389,6 +381,10 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
                     x=imot;
                     while(mot[x]!='\n')
                     {
+                        if(distance<=distancereq)
+                        {
+                            indicesErrFrappe[distance] = x;
+                        }
                         x++;
                         distance++;
                     }
@@ -399,6 +395,10 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
                     x=ichaine;
                     while(chaine[x]!='/' && chaine[x]!=' ' && chaine[x]!='\n')
                     {
+                        if(distance<=distancereq)
+                        {
+                            indicesErrFrappe[distance] = x;
+                        }
                         x++;
                         distance++;
                     }
@@ -415,7 +415,6 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
             }
             else if(distance<=distancereq) //Copie dus mots proche du dico dans un tableau de struct
             {
-
                 tabfinal[*tailletab].diff=distance;
                 z=0;
                 while(chaine[z]!='\n')
@@ -424,6 +423,7 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
                     z++;
                 }
                 tabfinal[*tailletab].tab[z]=chaine[z];
+                tabfinal[*tailletab] = erreurFrappe(tabfinal[*tailletab], mot, indicesErrFrappe, distancereq);
                 *tailletab=(*tailletab)+1;
             }
 
@@ -541,7 +541,7 @@ int main()
     tabfinal=(motproche*)malloc(sizeof(motproche)*300);
     switch(mode)
     {
-        case 1:recupmot(mot);res=correctionmot(mot,tabfinal,&tailletab);
+        case 1:recupmot(mot);res=correctionmot(mot,tabfinal,&tailletab);tri_liste(tabfinal, tailletab);;
         if(res==0)affichage(&tailletab,tabfinal);
         break;                   // correcteur de mot un à un
         case 2:correctionfichier(tabfinal,tailletab);break;   // correction d'un fichier txt
