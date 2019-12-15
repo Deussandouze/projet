@@ -494,9 +494,9 @@ void correctionfichier(motproche *tabfinal,int tailletab)
             {
                 x=affichage(&tailletab,tabfinal);
             }
-            if (x>=0)
+            if (res==1)
             {
-                if(res==1)x=0;
+                x=0;
                 copiemotfichier(motbon,tabfinal,x);
                 copiedansfichier(nouvfichier,motbon);
             }
