@@ -235,7 +235,72 @@ int taillemot(char *mot)
     return t;
 }
 
-void correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
+void ajouter()
+{
+    FILE* ptr=NULL;
+    char mot[100];
+    ptr=fopen("dico.dic","a");
+    if (ptr!=NULL)
+    {
+        printf("Veuillez saisir le nouveau mot a ajouter au dictionnaire : ");
+        fflush(stdin);
+        fgets(mot,100,stdin);
+        fseek(ptr,0,SEEK_END);
+        fprintf(ptr,"%s",mot);
+        fclose(ptr);
+    }
+    else printf("Impossible d'acces");
+
+}
+
+int affichage(int *taille,motproche *tabfinal)
+{
+    int pos=0,continuer,n=5,posfinal,x,choix;
+    printf("%s",tabfinal[pos].tab);
+    pos++;
+    printf("\nEtes vous satisfait du r\202sultat (OUI=1 , NON=0) : ");
+    scanf("%d",&continuer);
+    if (continuer==1)
+    {
+        return 0;
+    }
+    while(pos<=(*taille) && continuer==0)
+    {
+        n=n*2;
+        while(pos<=(*taille) && pos<=n)
+        {
+            x=0;
+            while(tabfinal[pos].tab[x]!='\n')
+                {
+                    printf("%c",tabfinal[pos].tab[x]);
+                    x++;
+                }
+            printf("    position[%d]\n",pos);
+            pos++;
+        }
+        printf("\nEtes vous satisfait d'une des propositons (OUI=1 , NON=0) : ");
+        scanf("%d",&continuer);
+        if(continuer==1)
+        {
+            printf("Saisir la position associ\202e au mot choisi : ");
+            scanf("%d",&posfinal);
+            printf("%s",tabfinal[posfinal].tab);
+        }
+    }
+    if(continuer==0)
+    {
+        printf("Voulez vous ajouter un nouveau mot au dictionnaire ? (OUI=1 , NON=0) : ");
+        scanf("%d",&choix);
+        if (choix==1)
+        {
+            ajouter();
+        }
+        return -1;
+    }
+
+}
+
+int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
 {
     FILE* fichier = NULL;
     char chaine[100];
@@ -344,8 +409,9 @@ void correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
                 same=1;
 
                 strcpy(tabfinal[0].tab,chaine);
-                printf("%s",tabfinal[0].tab);
+                printf("Mot trouv\202 : %s",tabfinal[0].tab);
                 *tailletab=0;
+                return 1;
             }
             else if(distance<=distancereq) //Copie dus mots proche du dico dans un tableau de struct
             {
@@ -365,24 +431,12 @@ void correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
         }
         *tailletab=(*tailletab)-1;
 
+        fclose(fichier);
+
         if (same!=1)
         {
-            for(i=0;i<=*tailletab;i++) // affichage de toutes les possibilitées à l'écran
-            {
-                x=0;
-                printf("\n");
-                while(tabfinal[i].tab[x]!='\n')
-                {
-                    printf("%c",tabfinal[i].tab[x]);
-                    x++;
-                }
-                 printf("   %d",tabfinal[i].diff);
-            }
+            return 0;
         }
-
-
-        printf("\n\nMot trouv\202 : %d",same); // affichage si le mot àbien été trouvé
-        fclose(fichier);
     }
     else
     {
@@ -417,7 +471,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
     ptr=fopen("texte.txt","r");
     nouvfichier=fopen("textecorrige.txt","w");
     char lettre,mottext[30],motbon[30];
-    int x=0;
+    int x=0,res,compteur;
     motproche motcorrige[300];
     int i;
     if (ptr!=NULL && nouvfichier!=NULL)
@@ -426,17 +480,32 @@ void correctionfichier(motproche *tabfinal,int tailletab)
         lettre=fgetc(ptr);
         while(feof(ptr)==0)
         {
+            compteur=0;
             i=0;
             while(lettre!='.' && lettre!=',' && lettre!=';' && lettre!=' ' && lettre!='ÿ' && lettre!='\n')
             {
                 mottext[i]=lettre;
                 i++;
+                compteur++;
                 lettre=fgetc(ptr);
             }
             mottext[i]='\n';
-            correctionmot(mottext,tabfinal,&tailletab);
-            copiemotfichier(motbon,tabfinal,x);
-            copiedansfichier(nouvfichier,motbon);
+            res=correctionmot(mottext,tabfinal,&tailletab);
+            if(res==0)
+            {
+                x=affichage(&tailletab,tabfinal);
+            }
+            if (res==1)
+            {
+                x=0;
+                copiemotfichier(motbon,tabfinal,x);
+                copiedansfichier(nouvfichier,motbon);
+            }
+            else if(x<0 && res==0)
+            {
+                fseek(ptr,-(compteur+1),SEEK_CUR);
+                lettre=fgetc(ptr);
+            }
             while((lettre=='.' || lettre==',' || lettre==';' || lettre==' '|| lettre=='\n' )&& lettre!='ÿ')
             {
                 fprintf(nouvfichier,"%c",lettre);
@@ -444,7 +513,6 @@ void correctionfichier(motproche *tabfinal,int tailletab)
             }
 
         }
-
 
         fclose(ptr);
         fclose(nouvfichier);
@@ -458,7 +526,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
 int main()
 {
     char mot[30];
-    int mode,tailletab;
+    int mode,tailletab,res;
     motproche* tabfinal;
     printf("Quel mode souahitez vous utiliser ?");
     printf("\n1- Mode correction de mot.\n2- Mode correction de texte.");
@@ -473,7 +541,9 @@ int main()
     tabfinal=(motproche*)malloc(sizeof(motproche)*300);
     switch(mode)
     {
-        case 1:recupmot(mot);correctionmot(mot,tabfinal,&tailletab);break;                   // correcteur de mot un à un
+        case 1:recupmot(mot);res=correctionmot(mot,tabfinal,&tailletab);
+        if(res==0)affichage(&tailletab,tabfinal);
+        break;                   // correcteur de mot un à un
         case 2:correctionfichier(tabfinal,tailletab);break;   // correction d'un fichier txt
     }
 
