@@ -287,6 +287,7 @@ int affichage(int *taille,motproche *tabfinal)
         }
         return -1;
     }
+    return posfinal;
 }
 
 int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
@@ -441,7 +442,7 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
     {
         printf("Impossible d'acces");
     }
-    return 1;
+    return 0;
 }
 
 void copiemotfichier(char *tab,motproche *tabfinal,int x)
@@ -494,9 +495,9 @@ void correctionfichier(motproche *tabfinal,int tailletab)
             {
                 x=affichage(&tailletab,tabfinal);
             }
-            if (res==1)
+            if (x>=0)
             {
-                x=0;
+                if(res==1)x=0;
                 copiemotfichier(motbon,tabfinal,x);
                 copiedansfichier(nouvfichier,motbon);
             }
@@ -540,7 +541,7 @@ int main()
     tabfinal=(motproche*)malloc(sizeof(motproche)*300);
     switch(mode)
     {
-        case 1:recupmot(mot);res=correctionmot(mot,tabfinal,&tailletab);tri_liste(tabfinal, tailletab);;
+        case 1:recupmot(mot);res=correctionmot(mot,tabfinal,&tailletab);tri_liste(tabfinal, tailletab);
         if(res==0)affichage(&tailletab,tabfinal);
         break;                   // correcteur de mot un à un
         case 2:correctionfichier(tabfinal,tailletab);break;   // correction d'un fichier txt
