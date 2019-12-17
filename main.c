@@ -4,11 +4,40 @@
 
 
 typedef struct{
-char tab[100];
+char tab[1000];
 int diff;
 int err_frappe;
 }motproche;
 
+char lettres_proches[26][7] = //def des lettres proches
+{
+    {'&', 'é', 'z', 's', 'q', '\0', '\0'}, //a
+    {'v', 'g', 'h', 'n', '\0', '\0', '\0'}, //b
+    {'x', 'd', 'f', 'v', '\0', '\0', '\0'}, //c
+    {'s', 'z', 'e', 'r', 'f', 'c', 'x'}, //d
+    {'z', '"', '\'', 'r', 'f', 'd', 's'}, //e
+    {'d', 'e', 'r', 't', 'g', 'v', 'c'}, //f
+    {'f', 'r', 't', 'y', 'h', 'b', 'v'}, //g
+    {'g', 't', 'y', 'u', 'j', 'n', 'b'}, //h
+    {'u', '_', 'ç', 'o', 'l', 'k', 'j'}, //i
+    {'h', 'y', 'u', 'i', 'k', ',', 'n'}, //j
+    {'j', 'u', 'i', 'o', 'l', ';', ','}, //k
+    {'k', 'i', 'o', 'p', 'm', ':', ';'}, //l
+    {'l', 'o', 'p', '^', 'ù', '!', ':'}, //m
+    {'b', 'h', 'j', ',', '\0', '\0', '\0'}, //n
+    {'i', 'ç', 'à', 'p', 'm', 'l', 'k'}, //o
+    {'o', 'à', ')', '^', 'ù', 'm', 'l'}, //p
+    {'a', 'z', 's', 'x', 'w', '<', '\0'}, //q
+    {'e', 'd', 'f', 'g', 't', '(', '\''}, //r
+    {'q', 'a', 'z', 'e', 'd', 'x', 'w'}, //s
+    {'r', 'f', 'g', 'h', 'y', '-', '('}, //t
+    {'y', 'h', 'j', 'k', 'i', '_', 'è'}, //u
+    {'c', 'f', 'g', 'b', '\0', '\0', '\0'}, //v
+    {'<', 'q', 's', 'x', '\0', '\0', '\0'}, //w
+    {'w', 's', 'd', 'c', '\0', '\0', '\0'}, //x
+    {'t', 'g', 'h', 'j', 'u', 'è', '-'}, //y
+    {'a', 'q', 's', 'd', 'e', '"', 'é'} //z
+};
 
 
 motproche erreurFrappe(motproche new_word, char* mot, int* ind, int distancereq)
@@ -16,56 +45,29 @@ motproche erreurFrappe(motproche new_word, char* mot, int* ind, int distancereq)
     int find, i, x, j;
     char x2;
 
-    char lettres_proches[26][7] = //def des lettres proches
-    {
-        {'&', 'é', 'z', 's', 'q', '\0', '\0'}, //a
-        {'v', 'g', 'h', 'n', '\0', '\0', '\0'}, //b
-        {'x', 'd', 'f', 'v', '\0', '\0', '\0'}, //c
-        {'s', 'z', 'e', 'r', 'f', 'c', 'x'}, //d
-        {'z', '"', '\'', 'r', 'f', 'd', 's'}, //e
-        {'d', 'e', 'r', 't', 'g', 'v', 'c'}, //f
-        {'f', 'r', 't', 'y', 'h', 'b', 'v'}, //g
-        {'g', 't', 'y', 'u', 'j', 'n', 'b'}, //h
-        {'u', '_', 'ç', 'o', 'l', 'k', 'j'}, //i
-        {'h', 'y', 'u', 'i', 'k', ',', 'n'}, //j
-        {'j', 'u', 'i', 'o', 'l', ';', ','}, //k
-        {'k', 'i', 'o', 'p', 'm', ':', ';'}, //l
-        {'l', 'o', 'p', '^', 'ù', '!', ':'}, //m
-        {'b', 'h', 'j', ',', '\0', '\0', '\0'}, //n
-        {'i', 'ç', 'à', 'p', 'm', 'l', 'k'}, //o
-        {'o', 'à', ')', '^', 'ù', 'm', 'l'}, //p
-        {'a', 'z', 's', 'x', 'w', '<', '\0'}, //q
-        {'e', 'd', 'f', 'g', 't', '(', '\''}, //r
-        {'q', 'a', 'z', 'e', 'd', 'x', 'w'}, //s
-        {'r', 'f', 'g', 'h', 'y', '-', '('}, //t
-        {'y', 'h', 'j', 'k', 'i', '_', 'è'}, //u
-        {'c', 'f', 'g', 'b', '\0', '\0', '\0'}, //v
-        {'<', 'q', 's', 'x', '\0', '\0', '\0'}, //w
-        {'w', 's', 'd', 'c', '\0', '\0', '\0'}, //x
-        {'t', 'g', 'h', 'j', 'u', 'è', '-'}, //y
-        {'a', 'q', 's', 'd', 'e', '"', 'é'} //z
-    };
-
     find=0;
     new_word.err_frappe=0;
 
-    for(i=0; i<distancereq; i++)
+    if(distancereq<=3)
     {
-        x2 = mot[ind[i]];
-        if(x2 >= 'A' && x2 <= 'Z')
-            x = (int)x2-65;
-        else if(x2 >= 'a' && x2 <= 'z')
-            x = (int)x2-97;
-        else x=-1;
-
-        j = -1;
-        while((j<7)&&(new_word.err_frappe==find))
+        for(i=0; i<distancereq; i++)
         {
-            j = j+1;
-            if( (x>0) && (( new_word.tab[ind[i]] ) == ( lettres_proches[x][j] )) )
+            x2 = mot[ind[i]];
+            if(x2 >= 'A' && x2 <= 'Z')
+                x = (int)x2-65;
+            else if(x2 >= 'a' && x2 <= 'z')
+                x = (int)x2-97;
+            else x=-1;
+
+            j = -1;
+            while((j<7)&&(new_word.err_frappe==find))
             {
-                new_word.err_frappe = new_word.err_frappe+1;
-                find = new_word.err_frappe;
+                j = j+1;
+                if( (x>0) && (( new_word.tab[ind[i]] ) == ( lettres_proches[x][j] )) )
+                {
+                    new_word.err_frappe = new_word.err_frappe+1;
+                    find = new_word.err_frappe;
+                }
             }
         }
     }
@@ -210,7 +212,7 @@ void recupmot(char *mot)
     printf("\nBienvenue dans le correcteur de mot.\n");
     printf("\nVeuillez saisir un mot  corriger : ");
     fflush(stdin);
-    fgets(mot,30,stdin);
+    fgets(mot,1000,stdin);
 }
 
 int taillemot(char *mot)
@@ -226,7 +228,7 @@ int taillemot(char *mot)
 void ajouter()
 {
     FILE* ptr=NULL;
-    char mot[100];
+    char mot[1000];
     ptr=fopen("dico.dic","a");
     if (ptr!=NULL)
     {
@@ -258,7 +260,7 @@ int affichage(int *taille,motproche *tabfinal)
         while(pos<=(*taille) && pos<=n)
         {
             x=0;
-            while(tabfinal[pos].tab[x]!='\n')
+            while((tabfinal[pos].tab[x]!='\n')&&(tabfinal[pos].tab[x]!='/'))
                 {
                     printf("%c",tabfinal[pos].tab[x]);
                     x++;
@@ -290,19 +292,19 @@ int affichage(int *taille,motproche *tabfinal)
     return posfinal;
 }
 
-int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
+int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
 {
     FILE* fichier = NULL;
-    char chaine[100];
+    char chaine[1000];
     int i,x,z,distance,same=0,taille,taillechaine,distancereq;
     int lettre_doublee,lettre_oublie,imot,ichaine;
-    int TAILLE_MAX=100;
     int indicesErrFrappe[3]={0,0,0};
 
     fichier = fopen("dico.dic","r");
     taille=taillemot(mot);
 
     deflimite(taille,&distancereq);
+    int TAILLE_MAX=strlen(mot)+distancereq;
 
     if (fichier!=NULL)
     {
@@ -471,7 +473,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
     FILE *ptr=NULL,*nouvfichier=NULL;
     ptr=fopen("texte.txt","r");
     nouvfichier=fopen("textecorrige.txt","w");
-    char lettre,mottext[30],motbon[30];
+    char lettre,mottext[1000],motbon[1000];
     int x=0,res,compteur;
     int i;
     if (ptr!=NULL && nouvfichier!=NULL)
@@ -525,7 +527,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
 
 int main()
 {
-    char mot[30];
+    char mot[1000];
     int mode,tailletab,res;
     motproche* tabfinal;
     printf("Quel mode souahitez vous utiliser ?");
@@ -538,6 +540,7 @@ int main()
         fflush(stdin);
         scanf("%d",&mode);
     }
+    fflush(stdin);
     tabfinal=(motproche*)malloc(sizeof(motproche)*300);
     switch(mode)
     {
