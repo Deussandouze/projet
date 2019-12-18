@@ -4,102 +4,33 @@
 
 
 typedef struct{
-char tab[1000];
+char tab[100];
 int diff;
 int err_frappe;
 }motproche;
 
-char lettres_proches[26][7] = //def des lettres proches
+
+void tri(motproche* tabfinal,int taille)
 {
-    {'&', 'é', 'z', 's', 'q', '\0', '\0'}, //a
-    {'v', 'g', 'h', 'n', '\0', '\0', '\0'}, //b
-    {'x', 'd', 'f', 'v', '\0', '\0', '\0'}, //c
-    {'s', 'z', 'e', 'r', 'f', 'c', 'x'}, //d
-    {'z', '"', '\'', 'r', 'f', 'd', 's'}, //e
-    {'d', 'e', 'r', 't', 'g', 'v', 'c'}, //f
-    {'f', 'r', 't', 'y', 'h', 'b', 'v'}, //g
-    {'g', 't', 'y', 'u', 'j', 'n', 'b'}, //h
-    {'u', '_', 'ç', 'o', 'l', 'k', 'j'}, //i
-    {'h', 'y', 'u', 'i', 'k', ',', 'n'}, //j
-    {'j', 'u', 'i', 'o', 'l', ';', ','}, //k
-    {'k', 'i', 'o', 'p', 'm', ':', ';'}, //l
-    {'l', 'o', 'p', '^', 'ù', '!', ':'}, //m
-    {'b', 'h', 'j', ',', '\0', '\0', '\0'}, //n
-    {'i', 'ç', 'à', 'p', 'm', 'l', 'k'}, //o
-    {'o', 'à', ')', '^', 'ù', 'm', 'l'}, //p
-    {'a', 'z', 's', 'x', 'w', '<', '\0'}, //q
-    {'e', 'd', 'f', 'g', 't', '(', '\''}, //r
-    {'q', 'a', 'z', 'e', 'd', 'x', 'w'}, //s
-    {'r', 'f', 'g', 'h', 'y', '-', '('}, //t
-    {'y', 'h', 'j', 'k', 'i', '_', 'è'}, //u
-    {'c', 'f', 'g', 'b', '\0', '\0', '\0'}, //v
-    {'<', 'q', 's', 'x', '\0', '\0', '\0'}, //w
-    {'w', 's', 'd', 'c', '\0', '\0', '\0'}, //x
-    {'t', 'g', 'h', 'j', 'u', 'è', '-'}, //y
-    {'a', 'q', 's', 'd', 'e', '"', 'é'} //z
-};
-
-
-motproche erreurFrappe(motproche new_word, char* mot, int* ind, int distancereq)
-{
-    int find, i, x, j;
-    char x2;
-
-    find=0;
-    new_word.err_frappe=0;
-
-    if(distancereq<=3)
-    {
-        for(i=0; i<distancereq; i++)
-        {
-            x2 = mot[ind[i]];
-            if(x2 >= 'A' && x2 <= 'Z')
-                x = (int)x2-65;
-            else if(x2 >= 'a' && x2 <= 'z')
-                x = (int)x2-97;
-            else x=-1;
-
-            j = -1;
-            while((j<7)&&(new_word.err_frappe==find))
-            {
-                j = j+1;
-                if( (x>0) && (( new_word.tab[ind[i]] ) == ( lettres_proches[x][j] )) )
-                {
-                    new_word.err_frappe = new_word.err_frappe+1;
-                    find = new_word.err_frappe;
-                }
-            }
-        }
-    }
-    return new_word;
+    motproche tmp;
+	int en_desordre = 1;
+	while (en_desordre)
+	{
+		en_desordre = 0;
+		for (int j = 0; j < taille-1; j++)
+		{
+			if(tabfinal[j].diff > tabfinal[j+1].diff)
+			{
+                tmp = tabfinal[j+1];
+ 				tabfinal[j+1] = tabfinal[j];
+ 				tabfinal[j] = tmp;
+				en_desordre = 1;
+ 			}
+		}
+	}
 }
 
-void tri_liste(motproche* liste_mots, int nbrMots)
-{
-    int i=0;
-    motproche tmp, tmp2;
 
-    while(i<nbrMots)
-    {
-        if(liste_mots[i].diff > liste_mots[i+1].diff)
-        {
-            tmp = liste_mots[i];
-            tmp2 = liste_mots[i+1];
-            liste_mots[i] = tmp2;
-            liste_mots[i+1] = tmp;
-            i=-1;
-        }
-        if( ((liste_mots[i].err_frappe>liste_mots[i+1].err_frappe) || (liste_mots[i].err_frappe==0)) && (liste_mots[i].diff == liste_mots[i+1].diff) &&(liste_mots[i+1].err_frappe>0) )
-        {
-            tmp = liste_mots[i];
-            tmp2 = liste_mots[i+1];
-            liste_mots[i] = tmp2;
-            liste_mots[i+1] = tmp;
-            i=-1;
-        }
-        i++;
-    }
-}
 
 void deflimite(int taille,int *req) //reglage de la distance limite par rapport à la taille d'un mot
 {
@@ -201,10 +132,32 @@ void trad(char *tab,int t) //Traduction des accents du fichier avec le même code
             copie(tab,x);
             changer=1;
         }
+        else if (tab[x]==-61 && tab[x+1]==-71) // codage du ù
+        {
+            tab[x]=-105;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-69) // codage du û
+        {
+            tab[x]=-106;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-68) // codage du ü
+        {
+            tab[x]=-127;
+            copie(tab,x);
+            changer=1;
+        }
+        else if (tab[x]==-61 && tab[x+1]==-89) // codage du ç
+        {
+            tab[x]=-121;
+            copie(tab,x);
+            changer=1;
+        }
         x++;
     }
-
-
 }
 
 void recupmot(char *mot)
@@ -212,7 +165,7 @@ void recupmot(char *mot)
     printf("\nBienvenue dans le correcteur de mot.\n");
     printf("\nVeuillez saisir un mot  corriger : ");
     fflush(stdin);
-    fgets(mot,1000,stdin);
+    fgets(mot,30,stdin);
 }
 
 int taillemot(char *mot)
@@ -228,7 +181,7 @@ int taillemot(char *mot)
 void ajouter()
 {
     FILE* ptr=NULL;
-    char mot[1000];
+    char mot[100];
     ptr=fopen("dico.dic","a");
     if (ptr!=NULL)
     {
@@ -245,66 +198,85 @@ void ajouter()
 
 int affichage(int *taille,motproche *tabfinal)
 {
-    int pos=0,continuer,n=5,posfinal,x,choix;
-    printf("%s",tabfinal[pos].tab);
+    int pos=0,continuer,n=5,posfinal,x=0,choix;
+    printf("\nPremier mot propos\202 :\n");
+    while(tabfinal[pos].tab[x]!=' ' && tabfinal[pos].tab[x]!='/' && tabfinal[pos].tab[x]!='\n')
+    {
+        printf("%c",tabfinal[pos].tab[x]);
+        x++;
+    }
     pos++;
     printf("\nEtes vous satisfait du r\202sultat (OUI=1 , NON=0) : ");
     scanf("%d",&continuer);
+    while(continuer!=1 && continuer!=0)
+    {
+        printf("Veuillez saisir 0 ou 1 :");
+        fflush(stdin);
+        scanf("%d",&continuer);
+    }
+
     if (continuer==1)
     {
         return 0;
     }
     while(pos<=(*taille) && continuer==0)
     {
+        printf("\nMots propos\202s :\n");
         n=n*2;
         while(pos<=(*taille) && pos<=n)
         {
             x=0;
-            while((tabfinal[pos].tab[x]!='\n')&&(tabfinal[pos].tab[x]!='/'))
+            while(tabfinal[pos].tab[x]!=' ' && tabfinal[pos].tab[x]!='/' && tabfinal[pos].tab[x]!='\n')
                 {
                     printf("%c",tabfinal[pos].tab[x]);
                     x++;
                 }
-            printf("    position[%d]",pos);
-            printf("    (distance = %d |",tabfinal[pos].diff);
-            printf(" err_frappe =%d)\n",tabfinal[pos].err_frappe);
+            printf("    position[%d]\n",pos);
             pos++;
         }
         printf("\nEtes vous satisfait d'une des propositons (OUI=1 , NON=0) : ");
         scanf("%d",&continuer);
+        while(continuer!=1 && continuer!=0)
+        {
+            printf("Veuillez saisir 0 ou 1 :");
+            scanf("%d",&continuer);
+        }
         if(continuer==1)
         {
             printf("Saisir la position associ\202e au mot choisi : ");
             scanf("%d",&posfinal);
-            printf("%s",tabfinal[posfinal].tab);
         }
     }
     if(continuer==0)
     {
         printf("Voulez vous ajouter un nouveau mot au dictionnaire ? (OUI=1 , NON=0) : ");
         scanf("%d",&choix);
+        while(choix!=1 && choix!=0)
+        {
+            printf("Veuillez saisir 0 ou 1 :");
+            scanf("%d",&choix);
+        }
         if (choix==1)
         {
             ajouter();
         }
         return -1;
     }
-    return posfinal;
+
 }
 
-int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
+int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
 {
     FILE* fichier = NULL;
-    char chaine[1000];
-    int i,x,z,distance,same=0,taille,taillechaine,distancereq;
+    char chaine[100];
+    int i,x,z,compteur,distance,same=0,taille,taillechaine,distancereq;
     int lettre_doublee,lettre_oublie,imot,ichaine;
-    int indicesErrFrappe[3]={0,0,0};
+    int TAILLE_MAX=100;
 
     fichier = fopen("dico.dic","r");
     taille=taillemot(mot);
 
     deflimite(taille,&distancereq);
-    int TAILLE_MAX=strlen(mot)+distancereq;
 
     if (fichier!=NULL)
     {
@@ -323,13 +295,11 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
             {
                 if (mot[imot]!=chaine[ichaine])
                 {
-                    if(distance<=distancereq)
-                    {
-                        indicesErrFrappe[distance] = imot;
-                    }
+
                     distance+=1;
+
                 }
-                if (imot<taille-1 && ichaine<taille-1)
+                if (imot<taille-1 && ichaine<taille-1) // permet de corriger les fautes avec un taux de vérification important
                 {
                     if(mot[imot+1]==chaine[ichaine] && mot[imot+2]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine])  // correction des lettre insérées en doubles, ex : perssonne
                     {
@@ -341,13 +311,27 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
                     }
                     else if(mot[imot+1]==chaine[ichaine+2] && mot[imot+2]==chaine[ichaine+3] && mot[imot]!=chaine[ichaine] && mot[imot]=='f') // correction du f à la place de ph, éléfant / éléphant
                     {
-                        lettre_oublie+=2;
-                        lettre_doublee++;
+                        lettre_oublie++;
                     }
                     else if(mot[imot+2]==chaine[ichaine+1] && mot[imot+3]==chaine[ichaine+2] && mot[imot]!=chaine[ichaine] && chaine[ichaine]=='f') // correction du ph à la place du f
                     {
-                        lettre_oublie++;
+                        lettre_doublee++;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && chaine[ichaine]=='o' && mot[imot]=='e' && mot[imot+1]=='a' && mot[imot+2]=='u') // correction de o à la place du eau ex: véleau <=> vélo
+                    {
                         lettre_doublee+=2;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && chaine[ichaine]=='o' && mot[imot]=='a' && mot[imot+1]=='u') // correction de o à la place du au ex: vélau <=> vélo
+                    {
+                        lettre_doublee+=1;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && mot[imot]=='o' && chaine[ichaine]=='e' && chaine[ichaine+1]=='a' && chaine[ichaine+2]=='u') // correction de o à la place du eau ex: bato => bateau
+                    {
+                        lettre_oublie+=2;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] &&  mot[imot]=='o' && chaine[ichaine]=='a' && chaine[ichaine+1]=='u') // correction de eau à la place du o ex:  hot => haut
+                    {
+                        lettre_oublie++;
                     }
                 }
                 else // même mode de correction mais avec une précision moins élevée
@@ -362,20 +346,34 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
                     }
                     else if(mot[imot+1]==chaine[ichaine+2]  && mot[imot]!=chaine[ichaine] && mot[imot]=='f')
                     {
-                        lettre_oublie+=2;
-                        lettre_doublee++;
+                        lettre_oublie++;
                     }
                     else if(mot[imot+2]==chaine[ichaine+1] && mot[imot]!=chaine[ichaine] && chaine[ichaine]=='f')
                     {
-                        lettre_oublie++;
+                        lettre_doublee++;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && chaine[ichaine]=='o' && mot[imot]=='e' && mot[imot+1]=='a' && mot[imot+2]=='u') // correction de o à la place du eau ex: véleau <=> vélo
+                    {
                         lettre_doublee+=2;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && chaine[ichaine]=='o' && mot[imot]=='a' && mot[imot+1]=='u') // correction de o à la place du au ex: vélau <=> vélo
+                    {
+                        lettre_doublee+=1;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && mot[imot]=='o' && chaine[ichaine]=='e' && chaine[ichaine+1]=='a' && chaine[ichaine+2]=='u') // correction de o à la place du eau ex: bato => bateau
+                    {
+                        lettre_oublie+=2;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] &&  mot[imot]=='o' && chaine[ichaine]=='a' && chaine[ichaine+1]=='u') // correction de eau à la place du o ex:  hot => haut
+                    {
+                        lettre_oublie++;
                     }
                 }
 
 
                 i++;
-                imot=i+lettre_doublee;
                 ichaine=i+lettre_oublie;
+                imot=i+lettre_doublee;
             }
 
             if(mot[imot]!='\n') // test si on est bien arrivé à la fin du mot saisie
@@ -383,10 +381,6 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
                     x=imot;
                     while(mot[x]!='\n')
                     {
-                        if(distance<=distancereq)
-                        {
-                            indicesErrFrappe[distance] = x;
-                        }
                         x++;
                         distance++;
                     }
@@ -397,10 +391,6 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
                     x=ichaine;
                     while(chaine[x]!='/' && chaine[x]!=' ' && chaine[x]!='\n')
                     {
-                        if(distance<=distancereq)
-                        {
-                            indicesErrFrappe[distance] = x;
-                        }
                         x++;
                         distance++;
                     }
@@ -411,12 +401,20 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
                 same=1;
 
                 strcpy(tabfinal[0].tab,chaine);
-                printf("Mot trouv\202 : %s",tabfinal[0].tab);
+                compteur=0;
+                printf("\nMot trouv\202 :");
+
+                while(tabfinal[0].tab[compteur]!=' ' && tabfinal[0].tab[compteur]!='/' && tabfinal[0].tab[compteur]!='\n')
+                {
+                    printf("%c",tabfinal[0].tab[compteur]);
+                    compteur++;
+                }
                 *tailletab=0;
                 return 1;
             }
             else if(distance<=distancereq) //Copie dus mots proche du dico dans un tableau de struct
             {
+
                 tabfinal[*tailletab].diff=distance;
                 z=0;
                 while(chaine[z]!='\n')
@@ -425,7 +423,6 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
                     z++;
                 }
                 tabfinal[*tailletab].tab[z]=chaine[z];
-                tabfinal[*tailletab] = erreurFrappe(tabfinal[*tailletab], mot, indicesErrFrappe, distancereq);
                 *tailletab=(*tailletab)+1;
             }
 
@@ -444,7 +441,6 @@ int correctionmot(char mot[1000],motproche *tabfinal,int *tailletab)
     {
         printf("Impossible d'acces");
     }
-    return 0;
 }
 
 void copiemotfichier(char *tab,motproche *tabfinal,int x)
@@ -473,8 +469,8 @@ void correctionfichier(motproche *tabfinal,int tailletab)
     FILE *ptr=NULL,*nouvfichier=NULL;
     ptr=fopen("texte.txt","r");
     nouvfichier=fopen("textecorrige.txt","w");
-    char lettre,mottext[1000],motbon[1000];
-    int x=0,res,compteur;
+    char lettre,mottext[30],motbon[30];
+    int x=0,res,taille,compteur;
     int i;
     if (ptr!=NULL && nouvfichier!=NULL)
     {
@@ -484,7 +480,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
         {
             compteur=0;
             i=0;
-            while(lettre!='.' && lettre!=',' && lettre!=';' && lettre!=' ' && lettre!='ÿ' && lettre!='\n')
+            while(lettre!='.' && lettre!=',' && lettre!=';' && lettre!=' ' && lettre!='ÿ' && lettre!='\n' && lettre!='-' && lettre!='?')
             {
                 mottext[i]=lettre;
                 i++;
@@ -492,9 +488,14 @@ void correctionfichier(motproche *tabfinal,int tailletab)
                 lettre=fgetc(ptr);
             }
             mottext[i]='\n';
+            mottext[i+1]='\n';
+            mottext[i+2]='\n';
+            taille=taillemot(mottext);
+            trad(mottext,taille);
             res=correctionmot(mottext,tabfinal,&tailletab);
             if(res==0)
             {
+                tri(tabfinal,tailletab);
                 x=affichage(&tailletab,tabfinal);
             }
             if (x>=0)
@@ -508,7 +509,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
                 fseek(ptr,-(compteur+1),SEEK_CUR);
                 lettre=fgetc(ptr);
             }
-            while((lettre=='.' || lettre==',' || lettre==';' || lettre==' '|| lettre=='\n' )&& lettre!='ÿ')
+            while((lettre=='.' || lettre==',' || lettre==';' || lettre==' '|| lettre=='\n' || lettre=='-' || lettre=='?')&& lettre!='ÿ')
             {
                 fprintf(nouvfichier,"%c",lettre);
                 lettre=fgetc(ptr);
@@ -527,7 +528,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
 
 int main()
 {
-    char mot[1000];
+    char mot[30];
     int mode,tailletab,res;
     motproche* tabfinal;
     printf("Quel mode souahitez vous utiliser ?");
@@ -540,11 +541,10 @@ int main()
         fflush(stdin);
         scanf("%d",&mode);
     }
-    fflush(stdin);
     tabfinal=(motproche*)malloc(sizeof(motproche)*300);
     switch(mode)
     {
-        case 1:recupmot(mot);res=correctionmot(mot,tabfinal,&tailletab);tri_liste(tabfinal, tailletab);
+        case 1:recupmot(mot);res=correctionmot(mot,tabfinal,&tailletab);tri(tabfinal,tailletab);
         if(res==0)affichage(&tailletab,tabfinal);
         break;                   // correcteur de mot un à un
         case 2:correctionfichier(tabfinal,tailletab);break;   // correction d'un fichier txt
