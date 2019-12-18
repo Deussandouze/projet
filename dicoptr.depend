@@ -24,8 +24,10 @@
 	<stdlib.h>
 	<string.h>
 
-1576702549 source:c:\users\coren\onedrive\documents\github\projet\main.c
+1576711016 source:c:\users\coren\onedrive\documents\github\projet\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<wchar.h>
+	<locale.h>
 

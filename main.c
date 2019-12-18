@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
+#include <locale.h>
 
 
 typedef struct{
@@ -168,7 +170,7 @@ void decalage(char tab[], int pos)
     {
         x++;
     }
-    for(i=x; i>=pos; i--)
+    for(i=x; i>=0; i--)
     {
         tab[pos+i+1]=tab[pos+i];
     }
@@ -588,15 +590,17 @@ void copiemotfichier(char *tab,motproche *tabfinal,int x)
 void copiedansfichier(FILE* ptr,char *tab)
 {
     int i=0;
+
     while(tab[i]!='\n')
     {
-        fputc(tab[i],ptr);
+        fputc(tab[i], ptr);
         i++;
     }
 }
 
 void correctionfichier(motproche *tabfinal,int tailletab)
 {
+    setlocale( LC_ALL, "fr_FR.UTF-8" );
     FILE *ptr=NULL,*nouvfichier=NULL;
     ptr=fopen("texte.txt","r");
     nouvfichier=fopen("textecorrige.txt","w");
@@ -633,6 +637,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
             {
                 if(res==1)x=0;
                 copiemotfichier(motbon,tabfinal,x);
+                invTrad(motbon, tailletab);
                 copiedansfichier(nouvfichier,motbon);
             }
             else if(x<0 && res==0)
