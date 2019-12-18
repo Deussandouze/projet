@@ -160,6 +160,136 @@ void trad(char *tab,int t) //Traduction des accents du fichier avec le même code
     }
 }
 
+void decalage(char tab[], int pos)
+{
+    int i, x=1;
+
+    while(tab[pos+x]!='\n')
+    {
+        x++;
+    }
+    for(i=x; i>=pos; i--)
+    {
+        tab[pos+i+1]=tab[pos+i];
+    }
+}
+
+void invTrad(char *tab,int t) //Retraduction des accents du fichier avec le même code récupéré en console
+{
+
+    int x=0,changer=1;
+    while (changer!=0 || x<=t)
+    {
+        changer=0;
+        if (tab[x]==-126) // décodage du è
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-87;
+            changer=1;
+        }
+        else if (tab[x]==-118) // décodage du è
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-88;
+            changer=1;
+        }
+        else if (tab[x]==-119) // décodage du ë
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-85;
+            changer=1;
+        }
+        else if (tab[x]==-120) // décodage du ê
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-86;
+            changer=1;
+        }
+        else if (tab[x]==-116) // décodage de î
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-82;
+            changer=1;
+        }
+        else if (tab[x]==-117) // décodage de ï
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-81;
+            changer=1;
+        }
+        else if (tab[x]==-109) // décodage du ô
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-76;
+            changer=1;
+        }
+        else if (tab[x]==-108) // décodage du ö
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-92;
+            changer=1;
+        }
+        else if (tab[x]==-125) // décodage du â
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-94;
+            changer=1;
+        }
+        else if (tab[x]==-124) // décodage du ä
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-92;
+            changer=1;
+        }
+        else if (tab[x]==-123) // décodage du à
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-96;
+            changer=1;
+        }
+        else if (tab[x]==-105) // décodage du ù
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-71;
+            changer=1;
+        }
+        else if (tab[x]==-106) // décodage du û
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-69;
+            changer=1;
+        }
+        else if (tab[x]==-127) // décodage du ü
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-68;
+            changer=1;
+        }
+        else if (tab[x]==-121) // décodage du ç
+        {
+            tab[x]=-61;
+            decalage(tab,x+1);
+            tab[x+1]=-89;
+            changer=1;
+        }
+        x++;
+    }
+}
+
 void recupmot(char *mot)
 {
     printf("\nBienvenue dans le correcteur de mot.\n");
