@@ -275,7 +275,8 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
 
     fichier = fopen("dico.dic","r");
     taille=taillemot(mot);
-
+    mot[taille+2]='\n';
+    mot[taille+3]='\n';
     deflimite(taille,&distancereq);
 
     if (fichier!=NULL)
