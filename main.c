@@ -471,6 +471,14 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
                     {
                         lettre_oublie++;
                     }
+                    else if(mot[imot]!=chaine[ichaine] &&  mot[imot]=='a' && mot[imot+1]=='u' && chaine[ichaine]=='e' && chaine[ichaine+1]=='a' && chaine[ichaine+2]=='u') // correction de au à la place du eau ex: batau =>bateau
+                    {
+                        lettre_oublie++;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && chaine[ichaine]=='a' && chaine[ichaine+1]=='u' && mot[imot]=='e' && mot[imot+1]=='a' && mot[imot+2]=='u') // correction de eau à la place du au ex: beaume => baume
+                    {
+                        lettre_doublee+=2;
+                    }
                 }
                 else // même mode de correction mais avec une précision moins élevée
                 {
@@ -505,6 +513,14 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
                     else if(mot[imot]!=chaine[ichaine] &&  mot[imot]=='o' && chaine[ichaine]=='a' && chaine[ichaine+1]=='u') // correction de eau à la place du o ex:  hot => haut
                     {
                         lettre_oublie++;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] &&  mot[imot]=='a' && mot[imot+1]=='u' && chaine[ichaine]=='e' && chaine[ichaine+1]=='a' && chaine[ichaine+2]=='u') // correction de au à la place du eau ex: batau =>bateau
+                    {
+                        lettre_oublie++;
+                    }
+                    else if(mot[imot]!=chaine[ichaine] && chaine[ichaine]=='a' && chaine[ichaine+1]=='u' && mot[imot]=='e' && mot[imot+1]=='a' && mot[imot+2]=='u') // correction de eau à la place du au ex: beaume => baume
+                    {
+                        lettre_doublee+=2;
                     }
                 }
 
