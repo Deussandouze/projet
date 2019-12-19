@@ -19,7 +19,7 @@ void tri(motproche* tabfinal,int taille)
 	while (en_desordre)
 	{
 		en_desordre = 0;
-		for (int j = 0; j < taille-1; j++)
+		for (int j = 0; j <= taille-1; j++)
 		{
 			if(tabfinal[j].diff > tabfinal[j+1].diff)
 			{
@@ -64,99 +64,98 @@ void copie(char tab[],int pos) //permet la copie d'un tableau, utile pour la tra
 void trad(char *tab,int t) //Traduction des accents du fichier avec le même code récupéré en console
 {
 
-    int x=0,changer=1;
-    while (changer!=0 || x<=t)
+    int x=0;
+    while (x<=t)
     {
-        changer=0;
         if (tab[x]==-61 && tab[x+1]==-87) // codage du è
         {
             tab[x]=-126;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-88) // codage du è
         {
             tab[x]=-118;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-85) // codage du ë
         {
             tab[x]=-119;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-86) // codage du ê
         {
             tab[x]=-120;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-82) // codage de î
         {
             tab[x]=-116;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-81) // codage de ï
         {
             tab[x]=-117;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-76) // codage du ô
         {
             tab[x]=-109;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-92) // codage du ö
         {
             tab[x]=-108;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-94) // codage du â
         {
             tab[x]=-125;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-92) // codage du ä
         {
             tab[x]=-124;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-96) // codage du à
         {
             tab[x]=-123;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-71) // codage du ù
         {
             tab[x]=-105;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-69) // codage du û
         {
             tab[x]=-106;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-68) // codage du ü
         {
             tab[x]=-127;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         else if (tab[x]==-61 && tab[x+1]==-89) // codage du ç
         {
             tab[x]=-121;
             copie(tab,x);
-            changer=1;
+            t--;
         }
         x++;
     }
@@ -179,114 +178,113 @@ void decalage(char tab[], int pos)
 void invTrad(char *tab,int t) //Retraduction des accents du fichier avec le même code récupéré en console
 {
 
-    int x=0,changer=1;
-    while (changer!=0 || x<=t)
+    int x=0;
+    while (x<=t)
     {
-        changer=0;
         if (tab[x]==-126) // décodage du è
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-87;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-118) // décodage du è
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-88;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-119) // décodage du ë
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-85;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-120) // décodage du ê
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-86;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-116) // décodage de î
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-82;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-117) // décodage de ï
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-81;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-109) // décodage du ô
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-76;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-108) // décodage du ö
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-92;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-125) // décodage du â
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-94;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-124) // décodage du ä
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-92;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-123) // décodage du à
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-96;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-105) // décodage du ù
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-71;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-106) // décodage du û
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-69;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-127) // décodage du ü
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-68;
-            changer=1;
+            t++;
         }
         else if (tab[x]==-121) // décodage du ç
         {
             tab[x]=-61;
             decalage(tab,x+1);
             tab[x+1]=-89;
-            changer=1;
+            t++;
         }
         x++;
     }
@@ -314,31 +312,35 @@ void ajouter()
 {
     FILE* ptr=NULL;
     char mot[100];
+    int taille;
     ptr=fopen("dico.dic","a");
     if (ptr!=NULL)
     {
         printf("Veuillez saisir le nouveau mot a ajouter au dictionnaire : ");
         fflush(stdin);
         fgets(mot,100,stdin);
+        taille=taillemot(mot);
+        invTrad(mot, taille);
         fseek(ptr,0,SEEK_END);
         fprintf(ptr,"%s",mot);
         fclose(ptr);
     }
-    else printf("Impossible d'acces");
+    else printf("Impossible d'acc\250s");
 
 }
 
 int affichage(int *taille,motproche *tabfinal)
 {
     int pos=0,continuer,n=5,posfinal,x=0,choix;
-    printf("\nPremier mot propos\202 :\n");
+    printf("\n\nPremier mot propos\202 :\n");
     while(tabfinal[pos].tab[x]!=' ' && tabfinal[pos].tab[x]!='/' && tabfinal[pos].tab[x]!='\n')
     {
         printf("%c",tabfinal[pos].tab[x]);
         x++;
     }
+
     pos++;
-    printf("\nEtes vous satisfait du r\202sultat (OUI=1 , NON=0) : ");
+    printf("\n\nEtes vous satisfait du r\202sultat (OUI=1 , NON=0) : ");
     scanf("%d",&continuer);
     while(continuer!=1 && continuer!=0)
     {
@@ -366,26 +368,28 @@ int affichage(int *taille,motproche *tabfinal)
             printf("    position[%d]\n",pos);
             pos++;
         }
-        printf("\nEtes vous satisfait d'une des propositons (OUI=1 , NON=0) : ");
+        printf("\n\nEtes vous satisfait d'une des propositons (OUI=1 , NON=0) : ");
         scanf("%d",&continuer);
         while(continuer!=1 && continuer!=0)
         {
-            printf("Veuillez saisir 0 ou 1 :");
+            printf("\nVeuillez saisir 0 ou 1 :");
+            fflush(stdin);
             scanf("%d",&continuer);
         }
         if(continuer==1)
         {
-            printf("Saisir la position associ\202e au mot choisi : ");
+            printf("\nSaisir la position associ\202e au mot choisi : ");
             scanf("%d",&posfinal);
         }
     }
     if(continuer==0)
     {
-        printf("Voulez vous ajouter un nouveau mot au dictionnaire ? (OUI=1 , NON=0) : ");
+        printf("\nVoulez vous ajouter un nouveau mot au dictionnaire ? (OUI=1 , NON=0) : ");
         scanf("%d",&choix);
         while(choix!=1 && choix!=0)
         {
             printf("Veuillez saisir 0 ou 1 :");
+            fflush(stdin);
             scanf("%d",&choix);
         }
         if (choix==1)
@@ -407,14 +411,15 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
 
     fichier = fopen("dico.dic","r");
     taille=taillemot(mot);
-    mot[taille+2]='\n';
+    mot[taille+2]='\n'; // ces opérations permettent de rajouter  des sécurités sur les conditions d'arrêts
     mot[taille+3]='\n';
+    mot[taille+4]='\n';
     deflimite(taille,&distancereq);
 
     if (fichier!=NULL)
     {
         *tailletab=0;
-        while(fgets(chaine,TAILLE_MAX,fichier) != NULL && same==0)
+        while(fgets(chaine,TAILLE_MAX,fichier) != NULL && same==0) // permet de couvrir l'intégralité du fichier
         {
             taillechaine=strlen(chaine);
             trad(chaine,taillechaine);
@@ -600,11 +605,11 @@ void copiedansfichier(FILE* ptr,char *tab)
 
 void correctionfichier(motproche *tabfinal,int tailletab)
 {
-    setlocale( LC_ALL, "fr_FR.UTF-8" );
+
     FILE *ptr=NULL,*nouvfichier=NULL;
     ptr=fopen("texte.txt","r");
     nouvfichier=fopen("textecorrige.txt","w");
-    char lettre,mottext[30],motbon[30];
+    char lettre,mottext[30],motbon[30],phrase[200];
     int x=0,res,taille,compteur;
     int i;
     if (ptr!=NULL && nouvfichier!=NULL)
@@ -637,7 +642,8 @@ void correctionfichier(motproche *tabfinal,int tailletab)
             {
                 if(res==1)x=0;
                 copiemotfichier(motbon,tabfinal,x);
-                invTrad(motbon, tailletab);
+                taille=taillemot(motbon);
+                invTrad(motbon, taille);
                 copiedansfichier(nouvfichier,motbon);
             }
             else if(x<0 && res==0)
@@ -652,6 +658,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
             }
 
         }
+        printf("\nVotre texte est corrig\202 dans le fichier textecorrige.txt");
 
         fclose(ptr);
         fclose(nouvfichier);
