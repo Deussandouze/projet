@@ -609,7 +609,7 @@ void correctionfichier(motproche *tabfinal,int tailletab)
     FILE *ptr=NULL,*nouvfichier=NULL;
     ptr=fopen("texte.txt","r");
     nouvfichier=fopen("textecorrige.txt","w");
-    char lettre,mottext[30],motbon[30],phrase[200];
+    char lettre,mottext[30],motbon[30];
     int x=0,res,taille,compteur;
     int i;
     if (ptr!=NULL && nouvfichier!=NULL)
