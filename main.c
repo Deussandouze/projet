@@ -157,6 +157,10 @@ void trad(char *tab,int t) //Traduction des accents du fichier avec le même code
             copie(tab,x);
             t--;
         }
+        else if(tab[x]>64 && tab[x]<91)
+        {
+            tab[x]+=32;
+        }
         x++;
     }
 }
@@ -411,6 +415,7 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
 
     fichier = fopen("dico.dic","r");
     taille=taillemot(mot);
+    trad(mot,taille);
     mot[taille+2]='\n'; // ces opérations permettent de rajouter  des sécurités sur les conditions d'arrêts
     mot[taille+3]='\n';
     mot[taille+4]='\n';
