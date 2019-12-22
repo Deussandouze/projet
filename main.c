@@ -23,7 +23,7 @@ int err_frappe;
 void tri(motproche* tabfinal,int taille)
 {
     /*!
-    * \brief Cette fonction permet de trier le tableau de mot qui peuvent possiblement correspondre au mot qui a ete entre.
+    * \brief Cette fonction permet de trier le tableau de mot qui peuvent possiblement correspondre au mot qui a ete entre, le tri s'effectue selon le nombre de caractere de difference entre le mot original et la correction possible.
     */
     motproche tmp;
 	int en_desordre = 1;
@@ -48,7 +48,7 @@ void tri(motproche* tabfinal,int taille)
 void deflimite(int taille,int *req) //reglage de la distance limite par rapport à la taille d'un mot
 {
     /*!
-    * \brief Fonction qui permet de definir le nombre max de caracteres differents entre le mot a corriger et les mots du dictionnaire pour que ceux-ci puissent etre considere comme des bonnes corrections.
+    * \brief Fonction qui permet de definir le nombre max de caracteres differents entre le mot a corriger et les mots du dictionnaire pour que ceux-ci puissent etre considere comme des corrections possibles.
     */
     if (taille<=3)
     {
@@ -68,7 +68,7 @@ void deflimite(int taille,int *req) //reglage de la distance limite par rapport 
 void copie(char tab[],int pos)
 {
     /*!
-    * \brief Copie un tableau de caractere, fonction utilise dans la traduction des mots.
+    * \brief Copie un tableau de caracteres, fonction utilisee dans la traduction des mots.
     */
     int i=1;
     while(tab[pos+i]!='\n')
@@ -81,7 +81,7 @@ void copie(char tab[],int pos)
 void trad(char *tab,int t)
 {
     /*!
-    * \brief Mise en place d'un codage commun d'accents entre le fichier et la console, cette fonction traduit egalement les lettres majuscules en minuscules.
+    * \brief Traduction des accents des fichier de la meme maniere que dans la console ex : representation de la lettre e avec accent grave, Fichier : A majuscule accent tilde + Copyright Console : virgule . Cette fonction traduit egalement les lettres majuscules en minuscules.
     */
 
     int x=0;
@@ -188,7 +188,7 @@ void trad(char *tab,int t)
 void decalage(char tab[], int pos)
 {
     /*!
-    * \brief Fonction de copie d'un tableau en decalant chaque caractère d'une place sur la droite, utilise dans la fonction invTrad.
+    * \brief Fonction de copie d'un tableau. La copie s'effectue en decalant chaque caractères d'une place sur la droite, utilise dans la fonction invTrad.
     */
 
     int i, x=1;
@@ -324,7 +324,7 @@ void invTrad(char *tab,int t)
 void recupmot(char *mot)
 {
     /*!
-    * \brief Fonction qui permet de simplement recuperer un mot saisi par l'utilisateur.
+    * \brief Fonction qui permet de simplement recuperer un mot saisi par l'utilisateur dans un tableau de caracteres.
     */
     printf("\nBienvenue dans le correcteur de mot.\n");
     printf("\nVeuillez saisir un mot  corriger : ");
@@ -335,7 +335,7 @@ void recupmot(char *mot)
 int taillemot(char *mot)
 {
     /*!
-    * \brief Fonction qui calcule la taille d'un mot saisi dans un tableau de caracteres.
+    * \brief Fonction qui calcul la taille d'un mot saisi dans un tableau de caracteres.
     */
     int t=0;
     while(mot[t]!='\n')
@@ -365,14 +365,14 @@ void ajouter()
         fprintf(ptr,"%s",mot);
         fclose(ptr);
     }
-    else printf("Impossible d'acc\250s");
+    else printf("Impossible d'accès");
 
 }
 
 int affichage(int *taille,motproche *tabfinal)
 {
     /*!
-    * \brief Fonction permettant d'afficher les differentes mots pouvant correspondre au mot a corriger, si aucun mot ne convient a l'utilisateur alors il a la possibilite de faire appel a la fonction ajouter().
+    * \brief Fonction permettant d'afficher les differents mots pouvant correspondre au mot a corriger, si aucun mot ne convient a l'utilisateur alors il a la possibilite de faire appel a la fonction ajouter(), pour ajouter un nouveau mot au dictionnaire.
     */
     int pos=0,continuer,n=5,posfinal,x=0,choix;
     printf("\n\nPremier mot propos\202 :\n");
@@ -441,13 +441,14 @@ int affichage(int *taille,motproche *tabfinal)
         }
         return -1;
     }
+    return posfinal;
 
 }
 
 int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
 {
     /*!
-    * \brief Fonction principale du programme, celle-ci permet de recupere les mots du dictionnaire et de les comparer au mot saisi par l'utilisateur, de plus elle integre chaque mot qui pourrait correspondre a la correction recherchee dans un tableau qui sera ensuite trie et proposé a l'utilisateur.
+    * \brief Fonction principale du programme, celle-ci permet de recuperer les mots du dictionnaire et de les comparer au mot saisi par l'utilisateur, de plus elle integre chaque mot qui pourrait correspondre a la correction recherchee dans un tableau qui sera ensuite trie et propose a l'utilisateur.
     */
     FILE* fichier = NULL;
     char chaine[100];
@@ -613,7 +614,7 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
                 *tailletab=0;
                 return 1;
             }
-            else if(distance<=distancereq) //Copie dus mots proche du dico dans un tableau de struct
+            else if(distance<=distancereq)
             {
 
                 tabfinal[*tailletab].diff=distance;
@@ -642,6 +643,7 @@ int correctionmot(char mot[30],motproche *tabfinal,int *tailletab)
     {
         printf("Impossible d'acces");
     }
+    return 0;
 }
 
 void copiemotfichier(char *tab,motproche *tabfinal,int x)
@@ -675,7 +677,7 @@ void copiedansfichier(FILE* ptr,char *tab)
 void correctionfichier(motproche *tabfinal,int tailletab)
 {
     /*!
-    * \brief Cette fonction est la fonction principale du mode de correction de fichier.Elle permet de recuperer les mots dans le fichier de texte a corriger, la ponctuation et de retourner le texte corrige.
+    * \brief Cette fonction est la fonction principale du mode de correction de fichier.Elle permet de recuperer les mots dans le fichier de texte a corriger et la ponctuation. Puis elle retourne le texte corrige dans un nouveau fichier.
     */
 
     FILE *ptr=NULL,*nouvfichier=NULL;
@@ -743,6 +745,9 @@ void correctionfichier(motproche *tabfinal,int tailletab)
 
 int main()
 {
+    /**
+    * \brief la fonction main permet de choisir le mode desire.
+    */
     char mot[30];
     int mode,tailletab,res;
     motproche* tabfinal;

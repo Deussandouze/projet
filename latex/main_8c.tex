@@ -8,7 +8,7 @@ Ce programme permet de corriger les fautes de français d\textquotesingle{}un tex
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$stdlib.\+h$>$}\newline
 {\ttfamily \#include $<$string.\+h$>$}\newline
-\doxysubsection*{Classes}
+\doxysubsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structmotproche}{motproche}}
@@ -44,8 +44,7 @@ void \mbox{\hyperlink{main_8c_a8f695b4af6dbc88b0f9e1b162d345138}{copiedansfichie
 \item 
 void \mbox{\hyperlink{main_8c_ac1c4a801acfb38ed0f6bb26a1dd7e8b0}{correctionfichier}} (\mbox{\hyperlink{structmotproche}{motproche}} $\ast$tabfinal, int tailletab)
 \item 
-\mbox{\Hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
-int {\bfseries main} ()
+int \mbox{\hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
 \end{DoxyCompactItemize}
 
 
@@ -61,7 +60,7 @@ Ce programme permet de corriger les fautes de français d\textquotesingle{}un tex
 \doxysubsubsection{\texorpdfstring{affichage()}{affichage()}}
 {\footnotesize\ttfamily int affichage (\begin{DoxyParamCaption}\item[{int $\ast$}]{taille,  }\item[{\mbox{\hyperlink{structmotproche}{motproche}} $\ast$}]{tabfinal }\end{DoxyParamCaption})}
 
-Fonction permettant d\textquotesingle{}afficher les differentes mots pouvant correspondre au mot a corriger, si aucun mot ne convient a l\textquotesingle{}utilisateur alors il a la possibilite de faire appel a la fonction \mbox{\hyperlink{main_8c_aaf8cb31995d52a6eceb2fe5c91d0c34f}{ajouter()}}.\mbox{\Hypertarget{main_8c_aaf8cb31995d52a6eceb2fe5c91d0c34f}\label{main_8c_aaf8cb31995d52a6eceb2fe5c91d0c34f}} 
+Fonction permettant d\textquotesingle{}afficher les differents mots pouvant correspondre au mot a corriger, si aucun mot ne convient a l\textquotesingle{}utilisateur alors il a la possibilite de faire appel a la fonction \mbox{\hyperlink{main_8c_aaf8cb31995d52a6eceb2fe5c91d0c34f}{ajouter()}}, pour ajouter un nouveau mot au dictionnaire.\mbox{\Hypertarget{main_8c_aaf8cb31995d52a6eceb2fe5c91d0c34f}\label{main_8c_aaf8cb31995d52a6eceb2fe5c91d0c34f}} 
 \index{main.c@{main.c}!ajouter@{ajouter}}
 \index{ajouter@{ajouter}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{ajouter()}{ajouter()}}
@@ -73,7 +72,7 @@ Fonction qui a pour but de rentrer un mot a la fin du dictionnaire.\mbox{\Hypert
 \doxysubsubsection{\texorpdfstring{copie()}{copie()}}
 {\footnotesize\ttfamily void copie (\begin{DoxyParamCaption}\item[{char}]{tab\mbox{[}$\,$\mbox{]},  }\item[{int}]{pos }\end{DoxyParamCaption})}
 
-Copie un tableau de caractere, fonction utilise dans la traduction des mots.\mbox{\Hypertarget{main_8c_a8f695b4af6dbc88b0f9e1b162d345138}\label{main_8c_a8f695b4af6dbc88b0f9e1b162d345138}} 
+Copie un tableau de caracteres, fonction utilisee dans la traduction des mots.\mbox{\Hypertarget{main_8c_a8f695b4af6dbc88b0f9e1b162d345138}\label{main_8c_a8f695b4af6dbc88b0f9e1b162d345138}} 
 \index{main.c@{main.c}!copiedansfichier@{copiedansfichier}}
 \index{copiedansfichier@{copiedansfichier}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{copiedansfichier()}{copiedansfichier()}}
@@ -91,52 +90,58 @@ Dans le mode correction de fichier, cette fonction permet de recuperer le mot ch
 \doxysubsubsection{\texorpdfstring{correctionfichier()}{correctionfichier()}}
 {\footnotesize\ttfamily void correctionfichier (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmotproche}{motproche}} $\ast$}]{tabfinal,  }\item[{int}]{tailletab }\end{DoxyParamCaption})}
 
-Cette fonction est la fonction principale du mode de correction de fichier.\+Elle permet de recuperer les mots dans le fichier de texte a corriger, la ponctuation et de retourner le texte corrige.\mbox{\Hypertarget{main_8c_ab83e36651eaf92b38d70eb50db1879b0}\label{main_8c_ab83e36651eaf92b38d70eb50db1879b0}} 
+Cette fonction est la fonction principale du mode de correction de fichier.\+Elle permet de recuperer les mots dans le fichier de texte a corriger et la ponctuation. Puis elle retourne le texte corrige dans un nouveau fichier.\mbox{\Hypertarget{main_8c_ab83e36651eaf92b38d70eb50db1879b0}\label{main_8c_ab83e36651eaf92b38d70eb50db1879b0}} 
 \index{main.c@{main.c}!correctionmot@{correctionmot}}
 \index{correctionmot@{correctionmot}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{correctionmot()}{correctionmot()}}
 {\footnotesize\ttfamily int correctionmot (\begin{DoxyParamCaption}\item[{char}]{mot\mbox{[}30\mbox{]},  }\item[{\mbox{\hyperlink{structmotproche}{motproche}} $\ast$}]{tabfinal,  }\item[{int $\ast$}]{tailletab }\end{DoxyParamCaption})}
 
-Fonction principale du programme, celle-\/ci permet de recupere les mots du dictionnaire et de les comparer au mot saisi par l\textquotesingle{}utilisateur, de plus elle integre chaque mot qui pourrait correspondre a la correction recherchee dans un tableau qui sera ensuite trie et proposé a l\textquotesingle{}utilisateur.\mbox{\Hypertarget{main_8c_ad4bd1681c5d67a4110817fa12da1a579}\label{main_8c_ad4bd1681c5d67a4110817fa12da1a579}} 
+Fonction principale du programme, celle-\/ci permet de recuperer les mots du dictionnaire et de les comparer au mot saisi par l\textquotesingle{}utilisateur, de plus elle integre chaque mot qui pourrait correspondre a la correction recherchee dans un tableau qui sera ensuite trie et propose a l\textquotesingle{}utilisateur.\mbox{\Hypertarget{main_8c_ad4bd1681c5d67a4110817fa12da1a579}\label{main_8c_ad4bd1681c5d67a4110817fa12da1a579}} 
 \index{main.c@{main.c}!decalage@{decalage}}
 \index{decalage@{decalage}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{decalage()}{decalage()}}
 {\footnotesize\ttfamily void decalage (\begin{DoxyParamCaption}\item[{char}]{tab\mbox{[}$\,$\mbox{]},  }\item[{int}]{pos }\end{DoxyParamCaption})}
 
-Fonction de copie d\textquotesingle{}un tableau en decalant chaque caractère d\textquotesingle{}une place sur la droite, utilise dans la fonction inv\+Trad.\mbox{\Hypertarget{main_8c_a94d0bf4eff7d5d442f4f2c494aea6279}\label{main_8c_a94d0bf4eff7d5d442f4f2c494aea6279}} 
+Fonction de copie d\textquotesingle{}un tableau. La copie s\textquotesingle{}effectue en decalant chaque caractères d\textquotesingle{}une place sur la droite, utilise dans la fonction inv\+Trad.\mbox{\Hypertarget{main_8c_a94d0bf4eff7d5d442f4f2c494aea6279}\label{main_8c_a94d0bf4eff7d5d442f4f2c494aea6279}} 
 \index{main.c@{main.c}!deflimite@{deflimite}}
 \index{deflimite@{deflimite}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{deflimite()}{deflimite()}}
 {\footnotesize\ttfamily void deflimite (\begin{DoxyParamCaption}\item[{int}]{taille,  }\item[{int $\ast$}]{req }\end{DoxyParamCaption})}
 
-Fonction qui permet de definir le nombre max de caracteres differents entre le mot a corriger et les mots du dictionnaire pour que ceux-\/ci puissent etre considere comme des bonnes corrections.\mbox{\Hypertarget{main_8c_a17687cd1a987ce430619327e9c7a5089}\label{main_8c_a17687cd1a987ce430619327e9c7a5089}} 
+Fonction qui permet de definir le nombre max de caracteres differents entre le mot a corriger et les mots du dictionnaire pour que ceux-\/ci puissent etre considere comme des corrections possibles.\mbox{\Hypertarget{main_8c_a17687cd1a987ce430619327e9c7a5089}\label{main_8c_a17687cd1a987ce430619327e9c7a5089}} 
 \index{main.c@{main.c}!invTrad@{invTrad}}
 \index{invTrad@{invTrad}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{invTrad()}{invTrad()}}
 {\footnotesize\ttfamily void inv\+Trad (\begin{DoxyParamCaption}\item[{char $\ast$}]{tab,  }\item[{int}]{t }\end{DoxyParamCaption})}
 
-Traduction des accents du code console au code fichier, pour obtenir des caracteres avec accents dans les fichiers.\mbox{\Hypertarget{main_8c_a94addb8dc37b7293acede594d3a9b450}\label{main_8c_a94addb8dc37b7293acede594d3a9b450}} 
+Traduction des accents du code console au code fichier, pour obtenir des caracteres avec accents dans les fichiers.\mbox{\Hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+la fonction main permet de choisir le mode desire.\mbox{\Hypertarget{main_8c_a94addb8dc37b7293acede594d3a9b450}\label{main_8c_a94addb8dc37b7293acede594d3a9b450}} 
 \index{main.c@{main.c}!recupmot@{recupmot}}
 \index{recupmot@{recupmot}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{recupmot()}{recupmot()}}
 {\footnotesize\ttfamily void recupmot (\begin{DoxyParamCaption}\item[{char $\ast$}]{mot }\end{DoxyParamCaption})}
 
-Fonction qui permet de simplement recuperer un mot saisi par l\textquotesingle{}utilisateur.\mbox{\Hypertarget{main_8c_a3ade51071e0241b2b79e3a98afa3c988}\label{main_8c_a3ade51071e0241b2b79e3a98afa3c988}} 
+Fonction qui permet de simplement recuperer un mot saisi par l\textquotesingle{}utilisateur dans un tableau de caracteres.\mbox{\Hypertarget{main_8c_a3ade51071e0241b2b79e3a98afa3c988}\label{main_8c_a3ade51071e0241b2b79e3a98afa3c988}} 
 \index{main.c@{main.c}!taillemot@{taillemot}}
 \index{taillemot@{taillemot}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{taillemot()}{taillemot()}}
 {\footnotesize\ttfamily int taillemot (\begin{DoxyParamCaption}\item[{char $\ast$}]{mot }\end{DoxyParamCaption})}
 
-Fonction qui calcule la taille d\textquotesingle{}un mot saisi dans un tableau de caracteres.\mbox{\Hypertarget{main_8c_a24e6a1647c7ecfcc674fc54e35899346}\label{main_8c_a24e6a1647c7ecfcc674fc54e35899346}} 
+Fonction qui calcul la taille d\textquotesingle{}un mot saisi dans un tableau de caracteres.\mbox{\Hypertarget{main_8c_a24e6a1647c7ecfcc674fc54e35899346}\label{main_8c_a24e6a1647c7ecfcc674fc54e35899346}} 
 \index{main.c@{main.c}!trad@{trad}}
 \index{trad@{trad}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{trad()}{trad()}}
 {\footnotesize\ttfamily void trad (\begin{DoxyParamCaption}\item[{char $\ast$}]{tab,  }\item[{int}]{t }\end{DoxyParamCaption})}
 
-Mise en place d\textquotesingle{}un codage commun d\textquotesingle{}accents entre le fichier et la console, cette fonction traduit egalement les lettres majuscules en minuscules.\mbox{\Hypertarget{main_8c_aad1acd7200e66463a32f369fb5e91ed2}\label{main_8c_aad1acd7200e66463a32f369fb5e91ed2}} 
+Traduction des accents des fichier de la meme maniere que dans la console ex \+: representation de la lettre e avec accent grave, Fichier \+: A majuscule accent tilde + Copyright Console \+: virgule . Cette fonction traduit egalement les lettres majuscules en minuscules.\mbox{\Hypertarget{main_8c_aad1acd7200e66463a32f369fb5e91ed2}\label{main_8c_aad1acd7200e66463a32f369fb5e91ed2}} 
 \index{main.c@{main.c}!tri@{tri}}
 \index{tri@{tri}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{tri()}{tri()}}
 {\footnotesize\ttfamily void tri (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmotproche}{motproche}} $\ast$}]{tabfinal,  }\item[{int}]{taille }\end{DoxyParamCaption})}
 
-Cette fonction permet de trier le tableau de mot qui peuvent possiblement correspondre au mot qui a ete entre.
+Cette fonction permet de trier le tableau de mot qui peuvent possiblement correspondre au mot qui a ete entre, le tri s\textquotesingle{}effectue selon le nombre de caractere de difference entre le mot original et la correction possible.

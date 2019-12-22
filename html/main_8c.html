@@ -62,7 +62,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">main.c File Reference</div>  </div>
@@ -76,7 +76,7 @@ $(function() {
 <code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
+Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmotproche.html">motproche</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -110,8 +110,7 @@ Functions</h2></td></tr>
 <tr class="separator:a8f695b4af6dbc88b0f9e1b162d345138"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1c4a801acfb38ed0f6bb26a1dd7e8b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ac1c4a801acfb38ed0f6bb26a1dd7e8b0">correctionfichier</a> (<a class="el" href="structmotproche.html">motproche</a> *tabfinal, int tailletab)</td></tr>
 <tr class="separator:ac1c4a801acfb38ed0f6bb26a1dd7e8b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top"><a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -142,7 +141,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fonction permettant d'afficher les differentes mots pouvant correspondre au mot a corriger, si aucun mot ne convient a l'utilisateur alors il a la possibilite de faire appel a la fonction <a class="el" href="main_8c.html#aaf8cb31995d52a6eceb2fe5c91d0c34f">ajouter()</a>.</p>
+<p>Fonction permettant d'afficher les differents mots pouvant correspondre au mot a corriger, si aucun mot ne convient a l'utilisateur alors il a la possibilite de faire appel a la fonction <a class="el" href="main_8c.html#aaf8cb31995d52a6eceb2fe5c91d0c34f">ajouter()</a>, pour ajouter un nouveau mot au dictionnaire.</p>
 
 </div>
 </div>
@@ -189,7 +188,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Copie un tableau de caractere, fonction utilise dans la traduction des mots.</p>
+<p>Copie un tableau de caracteres, fonction utilisee dans la traduction des mots.</p>
 
 </div>
 </div>
@@ -282,7 +281,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cette fonction est la fonction principale du mode de correction de fichier.Elle permet de recuperer les mots dans le fichier de texte a corriger, la ponctuation et de retourner le texte corrige.</p>
+<p>Cette fonction est la fonction principale du mode de correction de fichier.Elle permet de recuperer les mots dans le fichier de texte a corriger et la ponctuation. Puis elle retourne le texte corrige dans un nouveau fichier.</p>
 
 </div>
 </div>
@@ -317,7 +316,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fonction principale du programme, celle-ci permet de recupere les mots du dictionnaire et de les comparer au mot saisi par l'utilisateur, de plus elle integre chaque mot qui pourrait correspondre a la correction recherchee dans un tableau qui sera ensuite trie et proposé a l'utilisateur.</p>
+<p>Fonction principale du programme, celle-ci permet de recuperer les mots du dictionnaire et de les comparer au mot saisi par l'utilisateur, de plus elle integre chaque mot qui pourrait correspondre a la correction recherchee dans un tableau qui sera ensuite trie et propose a l'utilisateur.</p>
 
 </div>
 </div>
@@ -346,7 +345,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fonction de copie d'un tableau en decalant chaque caractère d'une place sur la droite, utilise dans la fonction invTrad.</p>
+<p>Fonction de copie d'un tableau. La copie s'effectue en decalant chaque caractères d'une place sur la droite, utilise dans la fonction invTrad.</p>
 
 </div>
 </div>
@@ -375,7 +374,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fonction qui permet de definir le nombre max de caracteres differents entre le mot a corriger et les mots du dictionnaire pour que ceux-ci puissent etre considere comme des bonnes corrections.</p>
+<p>Fonction qui permet de definir le nombre max de caracteres differents entre le mot a corriger et les mots du dictionnaire pour que ceux-ci puissent etre considere comme des corrections possibles.</p>
 
 </div>
 </div>
@@ -408,6 +407,24 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
 
 </div>
 </div>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>la fonction main permet de choisir le mode desire.</p>
+
+</div>
+</div>
 <a id="a94addb8dc37b7293acede594d3a9b450"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a94addb8dc37b7293acede594d3a9b450">&#9670;&nbsp;</a></span>recupmot()</h2>
 
@@ -423,7 +440,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fonction qui permet de simplement recuperer un mot saisi par l'utilisateur.</p>
+<p>Fonction qui permet de simplement recuperer un mot saisi par l'utilisateur dans un tableau de caracteres.</p>
 
 </div>
 </div>
@@ -442,7 +459,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Fonction qui calcule la taille d'un mot saisi dans un tableau de caracteres.</p>
+<p>Fonction qui calcul la taille d'un mot saisi dans un tableau de caracteres.</p>
 
 </div>
 </div>
@@ -471,7 +488,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Mise en place d'un codage commun d'accents entre le fichier et la console, cette fonction traduit egalement les lettres majuscules en minuscules.</p>
+<p>Traduction des accents des fichier de la meme maniere que dans la console ex : representation de la lettre e avec accent grave, Fichier : A majuscule accent tilde + Copyright Console : virgule . Cette fonction traduit egalement les lettres majuscules en minuscules.</p>
 
 </div>
 </div>
@@ -500,7 +517,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cette fonction permet de trier le tableau de mot qui peuvent possiblement correspondre au mot qui a ete entre.</p>
+<p>Cette fonction permet de trier le tableau de mot qui peuvent possiblement correspondre au mot qui a ete entre, le tri s'effectue selon le nombre de caractere de difference entre le mot original et la correction possible.</p>
 
 </div>
 </div>
